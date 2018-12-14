@@ -1,0 +1,2 @@
+INSERT INTO REF_ROLE (ROL_NAME) VALUES('admin'),('user');
+INSERT INTO REF_BANK (BNK_NAME,BNK_LOGO) VALUES ('ธนาคารกรุงเทพ','BBL.png'),('ธนาคารกสิกรไทย','KBANK.png'),('ธนาคารกรุงไทย','KTB.png'),('ธนาคารทหารไทย','TMB.png'),('ธนาคารไทยพาณิชย์','SCB.png'),('ธนาคารกรุงศรีอยุธยา','BAY.png');

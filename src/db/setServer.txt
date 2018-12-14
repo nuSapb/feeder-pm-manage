@@ -1,0 +1,25 @@
+1.sudo apt-get update
+2.sudo apt-get upgrade
+3.sudo apt-get -y install gnupg2
+4.curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+5.sudo apt-get install -y nodejs
+6.sudo apt-get install -y build-essential
+7.sudo apt-get install -y mysql-server
+8.sudo mysql_secure_installation
+9.sudo mysql
+10.use mysql;
+update user set plugin = '' where User = 'root';
+flush privileges;
+exit;
+11.sudo npm install pm2 -g
+12.sudo pm2 startup
+13.sudo mkdir /var/log/nodejs
+14.sudo chown nc-user:nc-user /var/log/nodejs
+15.sudo apt-get install -y nano
+16.pm2 start --name=<feedermanage>
+<path_to_js_file> -o
+<path_to_log_stdout_file> -essential
+<path_to_log_stderr_file>
+pm2 start --name=orderManag ordermanag/index.js -o /var/log/nodejs/stdout.log -e /var/log/nodejs/error.log
+17.pm2 save
+ 

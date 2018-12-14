@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order Management</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Chakra+Petch|Raleway');
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    
+    </style>
+    
+
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+
+    <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+    <!-- Bootstrap Date-Picker Plugin -->
+   
+   
+    <!-- Bootstrap dataTables .css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+   
+    <style type="text/css">
+        .pm-box1{
+            padding: 80px 20px 20px 20px;
+            margin: 10px;
+        }
+        .pm-box2{
+            padding: 0px 10px 0px 10;
+        }
+    </style>
+</head>
+<body class="w3-theme-l5">
+
+    <div > 
+        <!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-theme-l4 w3-left-align w3-large">
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-red"><i class="fa fa-credit-card w3-margin-right"></i>Order Management</a>
+        <a href="#projDetail" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">New Project</a>
+        <a href="#tblProject" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Project list</a>
+        <a href="/payment" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">New Payment</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+            <img src="https://mbtskoudsalg.com/images/avatar-icon-png-3.png" class="w3-circle" style="height:28px;width:28px" alt="Avatar">
+          </a>
+    </div>
+    </div>
+<!-- START Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px"> 
+<!-- START Grid -->
+<div class="w3-row">
+<!-- STRRT left Col as Profile-->
+    <div class="w3-col m3">
+        <!-- Profile -->
+        <div class="w3-card w3-round w3-white">
+            <div class="w3-container">
+                <h4 class="w3-center">My Profile</h4>
+                <p class="w3-center"><img src="https://mbtskoudsalg.com/images/avatar-icon-png-3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                <hr>
+                <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
+                <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
+                <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+            </div>
+        </div>
+        <!-- END Profile -->
+    </div>
+<!-- END left Col as Profile-->
+
+<!-- STRRT main Col as Project-->
+<div class="w3-col m9">
+    <!-- SATRT Project List-->
+    <div class="w3-card w3-round w3-white w3-margin-left">
+    <div class="w3-container w3-padding">
+        <h4>Project List</h4>
+        <hr class="w3-clear">
+    <table id="tblProject" class="display w3-table w3-striped w3-bordered">
+        <thead>
+            <tr class="w3-theme-d4">
+                <th>Project Id</th>
+                <th>Project Name</th>
+                <th>Approved</th>
+                <th>Reject</th>
+                <th>Waiting</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>
+                    45a4f52d-e6e1-4673-822d-2ce229732a50
+                </td>
+                <td>
+                    ttest02
+                </td>
+                <td>
+                   <a href=/approve/45a4f52d-e6e1-4673-822d-2ce229732a50/y>0</a>
+                </td>
+                <td>
+                    <a href=/approve/45a4f52d-e6e1-4673-822d-2ce229732a50/n>0</a>
+                </td>
+                <td>
+                    <a href=/approve/45a4f52d-e6e1-4673-822d-2ce229732a50/w>0</a>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    75c9d13a-e681-4b85-b830-769e620c484c
+                </td>
+                <td>
+                    work on korea v1
+                </td>
+                <td>
+                   <a href=/approve/75c9d13a-e681-4b85-b830-769e620c484c/y>0</a>
+                </td>
+                <td>
+                    <a href=/approve/75c9d13a-e681-4b85-b830-769e620c484c/n>0</a>
+                </td>
+                <td>
+                    <a href=/approve/75c9d13a-e681-4b85-b830-769e620c484c/w>0</a>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    c6f6e8b3-fc40-481c-9af3-8becffbabb3b
+                </td>
+                <td>
+                    work on korea v1
+                </td>
+                <td>
+                   <a href=/approve/c6f6e8b3-fc40-481c-9af3-8becffbabb3b/y>0</a>
+                </td>
+                <td>
+                    <a href=/approve/c6f6e8b3-fc40-481c-9af3-8becffbabb3b/n>0</a>
+                </td>
+                <td>
+                    <a href=/approve/c6f6e8b3-fc40-481c-9af3-8becffbabb3b/w>0</a>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+        <div class="w3-container w3-margin-top w3-right">
+            <button type="button" class="w3-button w3-gray w3-margin-bottom" id="btnDelProject"><i class="fa fa-trash"></i>    Delete project</button> 
+        </div>
+    </div>
+    </div>
+    <!-- END Project List-->
+    <!--START Project detail-->
+    <div class="w3-container w3-padding w3-card w3-white w3-round w3-margin-left w3-margin-top w3-margin-bottom">
+        <span class="w3-right">
+            <div class="w3-container w3-right">
+                <button type="button" class="w3-button w3-red"id="btnAddProject"><i class="fa fa-plus"></i>    New project</button> 
+            </div>
+        </span>
+        <h4>Project Register</h4>
+        <hr class="w3-clear">
+<!--
+    <input type="button" class="btn btn-success" id="btnAddProject" value="Add Project">
+    <input type="button" class="btn btn-danger" id="btnDelProject" value="Delete Project">
+-->
+    <div id="projDetail">
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div>
+            <div class="form-group" id="projectDetail">
+                <input type="hidden" class="form-control" id="projectId" name="projectId">
+                <div class="w3-row-padding w3-col w3-margin-bottom">
+                    <label for="projectName"><i class="fa fa-address-card"></i>  Project Name</label>
+                    <input type="input" class="form-control w3-input w3-border" id="projectName" name="projectName" required>
+                </div>
+                <div class="w3-row-padding w3-half w3-margin-bottom">
+                    <label for="hookUrl"><i class="fa fa-link"></i>  Hook Url</label>
+                    <input type="input" class="form-control w3-input w3-border" id="hookUrl" name="hookUrl" placeholder="https://example.co.th/api/v1/name" required>
+                </div>
+                <div class="w3-row-padding w3-half w3-margin-bottom">
+                    <label for="redirectUrl"><i class="fa fa-link"></i>  Redirect Url</label>
+                    <input type="input" class="form-control w3-input w3-border" id="redirectUrl" name="redirectUrl" placeholder="https://example.co.th/name" required>
+                </div>
+                <div class="w3-row-padding w3-col w3-margin-bottom"><p id="plinkPayment"></p></div>
+                
+            </div>
+            <!--END Project head START Bank Account-->
+
+            <div>
+                <span class="w3-right w3-margin-right">
+                <button type="button" class="w3-button w3-round-large w3-tiny w3-red" id="btnAddRow" ><i class="fa fa-plus"></i></button>
+                <button type="button" class="w3-button w3-circle w3-tiny w3-gray" id="btnRemoveRow" ><i class="fa fa-minus"></i></button>
+                </span>
+                <h4>Bank Account</h4>
+                <hr class="w3-clear">
+            </div>
+
+            <div class="groupAccount">
+                
+                <div class="accountGroup" id="accountDetail">
+                    <!--clone here-->
+                    <div class="w3-container w3-card w3-light-gray w3-round w3-margin">
+                    <div class="w3-third w3-padding-small">
+                        <label for="bankId"><i class="fa fa-bank"></i> Bank name</label>
+                            <select class="form-control clsBankId" id="bankId" name="bankId">
+                            <option value="0">---Select Bank---</option>
+                                
+                            <option value=1>
+                                ธนาคารกรุงไทย
+                            </option>
+                                
+                            <option value=2>
+                                ธนาคารกสิกรไทย
+                            </option>
+                                
+                            <option value=3>
+                                ธนาคารกรุงเทพ
+                            </option>
+                                
+                            <option value=4>
+                                ธนาคารออมสิน
+                            </option>
+                                
+                            </select>
+                    </div>
+                    <div class="w3-third w3-padding-small">
+                        <label for="accountNum"><i class="fa fa-id-card-o"></i>  Account number</label>
+                        <input type="input" class="form-control w3-input w3-border clsAccountNum" name="accountNum">
+                    </div>
+                    <div class="w3-third w3-padding-small">
+                        <label for="accountName"><i class="fa fa-id-card-o"></i>  Account name</label>
+                        <input type="input" class="form-control w3-input w3-border clsAccountName" name="accountName">
+                    </div>
+                    
+                    <div class="w3-col w3-padding-small">
+                        <label for="inputGroupFileAddon01"><i class="fa fa-id-card"></i>  Book bank</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input clsBookbankFile" onchange="setPathUpload(0)"
+                                name="bookbankFile" aria-describedby="inputGroupFileAddon01" accept="image/jpeg, image/png"
+                                required>
+                            <label class="custom-file-label" for="uploadFile">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <img src="#" alt="bookbank" class="img-thumbnail clsBookbankImage" style="display: none" height="500"
+                        width="300">
+                    <input type="hidden" class="form-control clsBookbankImageId" id="bookbankImageId" name="bookbankImageId">
+                    
+                    </div>
+                </div>
+                
+            </div>
+            <div class="w3-container w3-margin-top w3-right">
+                    <button type="button" class="w3-button w3-gray w3-margin-bottom" id="btnDelProject"><i class="fa fa-trash"></i>    Delete project</button> 
+            </div>
+            <div class="w3-container w3-margin-top w3-right">
+                <button type="submit" class="w3-button w3-red w3-margin-bottom" value="Submit"><i class="fa fa-save"></i>  Submit</button>
+                <input type="reset" class="btn btn-default w3-button w3-gray w3-margin-bottom" value="Reset">
+            </div> 
+        </div>
+    </form>
+
+    </div>
+
+
+    </div>
+    <!-- END Project detail-->
+</div>
+<!-- END main col as Project -->
+</div>
+<!-- END Grid -->
+</div>
+<!-- END Page Container -->
+
+<script>
+
+    function setModeAdd() {
+        $('#projectId').val('')
+        $('#projectName').val('')
+        $('#hookUrl').val('')
+        $('#redirectUrl').val('')
+        $($(".clsBookbankFile")[0]).next('.custom-file-label').html("Choose file")
+        $('#plinkPayment').html(``)
+    }
+
+    function setPathUpload(i) {
+        let fileName = $($(".clsBookbankFile")[i]).val()
+        $($(".clsBookbankFile")[i]).next('.custom-file-label').html(fileName)
+        $($(".clsBookbankImage")[i]).attr("src", "#")
+        $($(".clsBookbankImage")[i]).css('display', 'none')
+        $($(".clsBookbankImageId")[i]).val('#')
+    }
+
+    function delAccountGroupAll() {
+        let i = $(".accountGroup").length - 1
+        while (i > 0) {
+            $($(".accountGroup")[i]).remove()
+            i = i - 1
+        }
+        $($(".clsBankId")[0]).val(0)
+        $($(".clsAccountNum")[0]).val('')
+        $($(".clsAccountName")[0]).val('')
+        $($(".clsBookbankImage")[0]).attr("src", "#")
+        $($(".clsBookbankImage")[0]).css('display', 'none')
+        $($(".clsBookbankImageId")[0]).val('')
+    }
+
+    function cloneAccountGroup() {
+        $("#accountDetail").clone().appendTo(".groupAccount")
+        let lastIdx = $(".clsAccountNum").length - 1
+        $($(".clsAccountNum")[lastIdx]).val("")
+        $($(".clsAccountName")[lastIdx]).val("")
+        $($(".clsBookbankFile")[lastIdx]).next('.custom-file-label').html("Choose file")
+        $($(".clsBookbankImage")[lastIdx]).attr("src", "#")
+        $($(".clsBookbankImage")[lastIdx]).css('display', 'none')
+        $($(".clsBookbankImageId")[lastIdx]).val('')
+        $($(".clsBookbankFile")[lastIdx]).replaceWith($(`
+                <input type="file" class="custom-file-input clsBookbankFile" onchange="setPathUpload(${lastIdx})"  name="bookbankFile"
+                    aria-describedby="inputGroupFileAddon01" accept="image/jpeg, image/png" required>
+        `))
+    }
+
+    function setDetail(data) {
+        console.log(data)
+        //pro_id_pk: "e3d52b09-bc77-4bf3-83db-c65670576e64"
+        $('#projectId').val(data.project.pro_id_pk)
+        $('#projectName').val(data.project.pro_name)
+        $('#hookUrl').val(data.project.pro_hook_url)
+        $('#redirectUrl').val(data.project.pro_redirect_url)
+        $('#plinkPayment').html(`<label for="linkPayment">Payment Url</label>
+                    <input type="input" class="form-control w3-input w3-border" id="linkPayment" name="linkPayment" readonly>`)
+        $('#linkPayment').val(data.project.pro_link_payment)
+        //pro_link_payment
+        for (let i = 0; i<data.projectsBanks.length; i++){ 
+            if (i > 0) { cloneAccountGroup() }  
+            $($(".clsBankId")[i]).val(data.projectsBanks[i].bnk_id_pk) 
+            $($(".clsAccountNum")[i]).val(data.projectsBanks[i].bac_number)
+            $($(".clsAccountName")[i]).val(data.projectsBanks[i].bac_account_name)
+            $($(".clsBookbankImage")[i]).attr("src", `/-/images/bookbank/${data.projectsBanks[i].bac_book_bank}`)
+            $($(".clsBookbankImage")[i]).css('display', 'inline')
+            $($(".clsBookbankImageId")[i]).val(data.projectsBanks[i].bac_book_bank)
+        }
+    }
+
+    $(document).ready(function () {
+        let dataTblProject = $('#tblProject').DataTable({
+            columnDefs: [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }]
+        })
+
+        $("#btnAddRow").on("click", () => {
+            cloneAccountGroup()
+        })
+
+        $("#btnAddProject").on("click", () => {
+            setModeAdd()
+            delAccountGroupAll()
+        })
+
+        $("#btnDelProject").on("click", async () => {
+            if (!$('#projectId').val()){
+                alert('กรุณา double click เลือกโปรเจ็กก่อน')
+                return false
+            }
+            const response = await fetch(`/project/delete`, {
+                method: 'post',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ projectId: $('#projectId').val() })
+            })
+            console.log(response)
+            if (response.status === 200) {
+                alert('Delete success')
+                location.reload();
+            } else {
+                alert(response.statusText)
+            }
+        })
+
+        $("#btnRemoveRow").on("click", () => {
+            let lastIdx = $(".accountGroup").length - 1
+            if (lastIdx === 0) {
+                alert('ต้องมีรายการข้อมูลอย่างน้อย 1 รายการ')
+                return false
+            }
+            $($(".accountGroup")[lastIdx]).remove()
+        })
+
+        $('#tblProject').on('dblclick', 'tr', async function () {
+            let tblData = dataTblProject.row(this).data()
+            let response = await fetch(`/project/${tblData[0]}`)
+            let data = await response.json()
+
+            delAccountGroupAll()
+            if (data) {
+                setDetail(data)
+            } else {
+                alert('Cannot fetch project id' + tblData[0])
+            }
+        })
+    })
+</script> 
+    </div>
+
+    <!-- Bootstrap dataTables .js-->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+</body>
+</html>

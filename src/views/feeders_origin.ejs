@@ -1,0 +1,111 @@
+<% include menu %>
+<!-- START Page Container -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- START Grid -->
+    <div class="w3-row">
+        <!-- STRRT left Col as Profile-->
+        <div class="w3-col m3">
+            <!-- Profile -->
+            <div class="w3-card w3-round w3-white">
+                <div class="w3-container">
+                    <h4 class="w3-center w3-margin-top">My Profile</h4>
+                    <p class="w3-center"><img src="https://mbtskoudsalg.com/images/avatar-icon-png-3.png" class="w3-circle"
+                            style="height:106px;width:106px" alt="Avatar"></p>
+                    <hr>
+                    <% userDetail.forEach((detail) => { %>
+                    <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>
+                        <%- detail.fullname %>
+                    </p>
+                    <p><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-theme"></i>
+                        <%- detail.role %>
+                    </p>
+                    <p><i class="fa fa-phone fa-fw w3-margin-right w3-text-theme"></i>
+                        <%- detail.phone %>
+                    </p>
+                    <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>
+                        <%- detail.email %>
+                    </p>
+
+
+                    <% }) %>
+                </div>
+            </div>
+            <!-- END Profile -->
+        </div>
+        <!-- END left Col as Profile-->
+
+        <!-- STRRT main Col as Project-->
+        <div class="w3-col m9">
+            <!-- SATRT Project List-->
+            <div class="w3-card w3-round w3-white w3-margin-left">
+                <div class="w3-container w3-padding">
+                    <h4>Feeder List</h4>
+                    <hr class="w3-clear">
+                    <table id="tblProject" class="display w3-table w3-striped w3-bordered" style="cursor:hand">
+                        <thead>
+                            <tr class="w3-theme-d4">
+                                <!--<th>Select</th>-->
+                                <th>FEEDER ID</th>
+                                <th>MFG TOOLING NAME</th>
+                                <th>TOOLING NAME</th>
+                                <th>MODEL</th>
+                                <th>FEEDER GROUP</th>
+                                <th>LOCATION</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% info.forEach((detail) => { %>
+                            <tr>
+                                <!--<td> 
+                    <input type="radio" class="form-check-input" id="selProject" name="selProject">
+                </td>-->
+                                <td>
+                                    <%- detail.feeder_id %>
+                                </td>
+                                <td>
+                                    <%- detail.mfg_tooling_id %>
+                                </td>
+                                <td>
+                                    <%- detail.tooling_name %></a>
+                                </td>
+                                <td>
+                                    <%- detail.model %></a>
+                                </td>
+                                <td>
+                                    <%- detail.feeder_group %></a>
+                                </td>
+                                <td>
+                                    <%- detail.location %></a>
+                                </td>
+                                <td>
+                                    <%- detail.status %></a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- END main col as Project -->
+    </div>
+    <!-- END Grid -->
+</div>
+<!-- END Page Container -->
+
+<script>
+   $(document).ready(function () {
+        $('#tblProject').DataTable();
+    });
+
+    $(document).on("dblclick", "#tblProject tr", function () {
+            alert('feeder DUE TO PM')
+        });
+</script>
