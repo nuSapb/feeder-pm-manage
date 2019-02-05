@@ -1,6 +1,6 @@
-const myUrlPayment = "http://localhost:3000/payment"
+const myUrlPayment = "http://localhost:8888/"
 const mailAuth = require("../config/mailAuth")
-const redirectUrlDefault = 'https://www.codecampthailand.com/'
+const redirectUrlDefault = 'http://localhost:8888/'
 module.exports = {
     myUrlPayment,
     mailAuth,
