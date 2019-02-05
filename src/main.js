@@ -7,6 +7,7 @@ const session = require('koa-session')
 const cors = require('@koa/cors')
 const logger = require('koa-logger')
 const app = new Koa()
+const send = require('../src/route/services/emails/sendmail')
 
 render(app, {
   root: path.join(__dirname, 'views'),
@@ -23,13 +24,13 @@ const sessionConfig = {
   maxAge: 1000 * 60 * 60,
   httpOnly: true,
   store: {
-    get (key, maxAge, { rolling }) {
+    get(key, maxAge, { rolling }) {
       return sessionStore[key]
     },
-    set (key, sess, maxAge, { rolling }) {
+    set(key, sess, maxAge, { rolling }) {
       sessionStore[key] = sess
     },
-    destroy (key) {
+    destroy(key) {
       delete sessionStore[key]
     }
   }
@@ -53,6 +54,7 @@ const stripPrefix = async (ctx, next) => {
   await next()
 }
 
+
 app.keys = ['supersecretorder']
 app.use(session(sessionConfig, app))
 app.use(cors({ credentials: true }))
@@ -67,4 +69,6 @@ app.use(stripPrefix)
 app.use(serve('public'))
 app.listen(process.env.PORT || 8088, () => {
   console.log('Server start!')
+  send.autoSendMail.start()
+  
 })

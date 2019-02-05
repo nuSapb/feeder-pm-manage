@@ -1,69 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Feeder PM Management</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Chakra+Petch|Raleway');
-        body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
-    
-    </style>
-    
+    <title>FEEDER PM MANAGEMENT</title>
+
+    <link rel="icon" href="/-/images/favicon.ico" type="image/ico" />
+
+    <title>FEEDER PM MANAGEMENT | </title>
+
+    <!-- Bootstrap -->
+    <link href="/-/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/-/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/-/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/-/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="/-/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/-/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="/-/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/-/build/css/custom.min.css" rel="stylesheet">
 
     
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
-
-    <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
-    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-
-    <!-- Bootstrap Date-Picker Plugin -->
-   
-   
-    <!-- Bootstrap dataTables .css-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
-    <!-- Cleave.js format everting number .css--> 
-    <script src="/-/src/js/cleave.min.js"></script>
-    <script src="/-/src/js/cleave-phone.th.js"></script> 
-    <style type="text/css">
-        .pm-box1{
-            padding: 80px 20px 20px 20px;
-            margin: 10px;
-        }
-        .pm-box2{
-            padding: 0px 10px 0px 10;
-        }
-        #tblPayment tbody tr {
-            cursor: pointer;
-        }
-        #tblProject tbody tr {
-            cursor: pointer;
-        }
-    </style>
 </head>
-<body class="w3-theme-l5">
 
-    <div > 
-        <%- body %> 
-    </div>
+<div>
+    <%- body %>
+</div>
 
-    <!-- Bootstrap dataTables .js-->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-</body>
+<!-- jQuery -->
+<script src="/-/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/-/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="/-/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/-/vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="/-/vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="/-/vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="/-/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="/-/vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="/-/vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="/-/vendors/Flot/jquery.flot.js"></script>
+<script src="/-/vendors/Flot/jquery.flot.pie.js"></script>
+<script src="/-/vendors/Flot/jquery.flot.time.js"></script>
+<script src="/-/vendors/Flot/jquery.flot.stack.js"></script>
+<script src="/-/vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="/-/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="/-/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+<script src="/-/vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="/-/vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="/-/vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="/-/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="/-/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="/-/vendors/moment/min/moment.min.js"></script>
+<script src="/-/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="/-/build/js/custom.min.js"></script>
+
+<!-- Jdenticon -->
+<script type="text/javascript" src="/-/vendors/jdenticon-2.1.0/jdenticon-2.1.0.min.js"></script>
+
+<!-- Datatables -->
+<script src="/-/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/-/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/-/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/-/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="/-/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="/-/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/-/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/-/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="/-/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="/-/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/-/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/-/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="/-/vendors/jszip/dist/jszip.min.js"></script>
+<script src="/-/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="/-/vendors/pdfmake/build/vfs_fonts.js"></script>
 </html>

@@ -12,12 +12,11 @@ const checkAuth = async (ctx, next) => {
     // 	error: '',
     // 	success: ''
     // }
-    return ctx.redirect('/feeders')
+    return ctx.redirect('/index')
   }
   await next()
 }
 
-//router.get('/signin', checkAuth, signIn.getHandler)
 router.get('/', checkAuth, signIn.getHandler)
 router.post('/signin', signIn.postHandler)
 router.get('/signup', checkAuth, signUp.getHandler)

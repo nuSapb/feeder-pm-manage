@@ -14,7 +14,7 @@ const postHandler = async ctx => {
     if (same) {
       ctx.session.userId = results[0].id
       ctx.session.username = results[0].username
-      return ctx.redirect('/feeders')
+      return ctx.redirect('/index')
     } else {
       ctx.session.flash = {
         error: 'Wrong password'
