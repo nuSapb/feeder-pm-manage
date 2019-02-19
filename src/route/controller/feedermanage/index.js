@@ -35,6 +35,8 @@ router.get('/form', async ctx => {
   await ctx.render('form')
 })
 
+router.post('/insert_feeders', checkAuth, feeders.addFeeders)
+
 router.get('/tables', checkAuth, feeders.findAllFeeder)
 
 

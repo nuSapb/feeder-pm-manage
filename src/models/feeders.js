@@ -200,6 +200,22 @@ const findScrap = async () => {
   return rows
 } 
 
+const addFeeders = async (feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, createDate, updater, updateDate, status ) => {
+  let [rows] = await pool.query(
+    `
+    INSERT INTO feeder_details (feeder_id, mfg_tooling_id, tooling_name, 
+                                model, feeder_group, location, 
+                                creator, create_date, updater, 
+                                update_date, status)
+    VALUE (?, ?, ?
+           ?, ?, ?
+           ?, now(), ?
+           now(), "ok")`,
+    [feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, createDate, updater, updateDate, status ]
+
+  )
+}
+
 
 
 module.exports = {
@@ -221,4 +237,5 @@ module.exports = {
   findOverDue,
   findRepair,
   findScrap,
+  addFeeders
 }

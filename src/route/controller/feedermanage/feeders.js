@@ -80,10 +80,19 @@ const findAllFeeder = async (ctx) => {
   await ctx.render('tables', data)
 }
 
+const addFeeders = async ctx => {
+  console.log("addFeeders")
+  let data = {}
+  const {brand } = ctx.request.body
+  console.log(brand)
+  ctx.redirect('/form')
+}
+
 
 
 module.exports = {
   getHandler,
   listAllFeederDue,
-  findAllFeeder
+  findAllFeeder,
+  addFeeders
 }

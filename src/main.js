@@ -68,7 +68,7 @@ app.use(require('./route'))
 app.use(stripPrefix)
 app.use(serve('public'))
 app.listen(process.env.PORT || 8088, () => {
-  console.log('Server start!')
+  console.log('Server start listenning on port 8088')
   send.autoSendMail.start()
   
 })
