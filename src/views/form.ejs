@@ -68,7 +68,7 @@
             <div class="col-md-6 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Insert New Feeder <small>Please insert require data below</small></h2>
+                  <h2>Insert New Feeder <small>Please insert infomation data below</small></h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -89,61 +89,61 @@
                 </div>
                 <div class="x_content">
                   <br />
-                  <form class="form-horizontal form-label-left">
+                  <form class="form-horizontal form-label-left" method="POST" action="/insert_feeders">
 
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Feeder ID</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Default Input">
+                        <input type="text" class="form-control" name="feederId" placeholder="Default Input">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">MFG Tooling ID</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Default Input">
+                        <input type="text" class="form-control" name="mfgToolingId" placeholder="Default Input">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Tooling Name</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Default Input">
+                        <input type="text" class="form-control" name="toolingName" placeholder="Default Input">
                       </div>
                     </div>
                    
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Brand</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select class="form-control">
-                          <option>ASM</option>
-                          <option>NXT</option>
+                        <select class="form-control" name="brand">
+                          <option value="ASM">ASM</option>
+                          <option value="NXT">NXT</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Size</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select class="form-control">
-                          <option>8 mm</option>
-                          <option>12 mm</option>
-                          <option>16 mm</option>
-                          <option>18 mm</option>
-                          <option>24 mm</option>
-                          <option>32 mm</option>
-                          <option>48 mm</option>
-                          <option>68 mm</option>
+                        <select class="form-control" name="size">
+                          <option value="8 mm">8 mm</option>
+                          <option value="12 mm">12 mm</option>
+                          <option value="16 mm">16 mm</option>
+                          <option value="18 mm">18 mm</option>
+                          <option value="24 mm">24 mm</option>
+                          <option value="32 mm">32 mm</option>
+                          <option value="48 mm">48 mm</option>
+                          <option value="68 mm">68 mm</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Location</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Default Input">
+                        <input type="text" class="form-control" name="location" placeholder="Default Input">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" placeholder="Default Input">
+                        <input type="text" class="form-control" name="status" placeholder="Default Input">
                       </div>
                     </div>
 
