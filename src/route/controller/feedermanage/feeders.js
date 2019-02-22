@@ -83,6 +83,7 @@ const findAllFeeder = async (ctx) => {
 const addFeeders = async ctx => {
   console.log("addFeeders")
   let data = {}
+  console.log(ctx.request.body)
   const {brand } = ctx.request.body
   console.log(brand)
   ctx.redirect('/form')
