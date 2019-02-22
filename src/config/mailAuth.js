@@ -1,6 +1,6 @@
 const user = {
   user: "nuhundred@gmail.com", //input your email address
-  password: "Beegle_001" //input your email password
+  password: "" //input your email password
 }
 
 const mailuser = user.user
