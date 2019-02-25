@@ -48,6 +48,7 @@ const getHandler = async ctx => {
 }
 
 const listAllFeederDue = async (ctx) => {
+  let data = {}
   const listAllDue = await feeders.findAllDue()
   console.log(listAllDue)
   data = {
@@ -57,6 +58,7 @@ const listAllFeederDue = async (ctx) => {
 }
 
 const listAllOnhands = async (ctx) => {
+  let data = {}
   const listAllDue = await feeders.findAllDue()
   console.log(listAllDue)
   data = {
@@ -66,6 +68,7 @@ const listAllOnhands = async (ctx) => {
 }
 
 const findAllFeeder = async (ctx) => {
+  let data = {}
   const listAllFeeder = await feeders.findAll()
   const listAllOverDue = await feeders.findOverDue()
   const listAllRepair = await feeders.findRepair()
@@ -80,13 +83,64 @@ const findAllFeeder = async (ctx) => {
   await ctx.render('tables', data)
 }
 
-const addFeeders = async ctx => {
-  console.log("addFeeders")
+const findlastTenRows = async (ctx) => {
   let data = {}
+  const last10Rows = await feeders.findLast10Rows()
+  console.log(last10Rows)
+  ctx.session.flash = {
+    success: 'add feeder done'
+  }
+  data = {
+    last10Rows: last10Rows,
+    flash: ctx.flash
+  }
+  await ctx.render('form', data)
+}
+
+const addFeeders = async ctx => {
+
+  console.log("addFeeders")
   console.log(ctx.request.body)
-  const {brand } = ctx.request.body
-  console.log(brand)
-  ctx.redirect('/form')
+  const feederGroup = assignFeederGroup()
+  console.log("feederGroup= " + feederGroup)
+  const user = ctx.session.username
+  const creator = user
+  const updater = user
+  const { feederId, mfgToolingId, toolingName, model, location, status } = ctx.request.body
+  try {
+    await feeders.addFeeders(feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, updater, status)
+    console.log("Insert new feeder complete")
+    ctx.status = 200
+    if (ctx.status === 200) {
+      ctx.session.flash = {
+        success: 'add feeder ' + feederId + ' done'
+      }
+      await ctx.redirect('/form')
+    } 
+  }
+  catch (err) {
+    console.error(err)
+    ctx.session.flash = {
+      error: 'fail to add new feeder => duplicate feeder ID' 
+    }
+    await ctx.redirect('/form')
+  }
+
+
+}
+
+const assignFeederGroup = (group) => {
+  const d = new Date()
+  const currentMonth = d.getMonth() + 1
+  if ([1, 2, 3].includes(currentMonth)) {
+    return group = 1
+  } else if ([4, 5, 6].includes(currentMonth)) {
+    return group = 2
+  } else if ([7, 8, 9].includes(currentMonth)) {
+    return group = 3
+  } else {
+    return group = 4
+  }
 }
 
 
@@ -95,5 +149,6 @@ module.exports = {
   getHandler,
   listAllFeederDue,
   findAllFeeder,
+  findlastTenRows,
   addFeeders
 }
