@@ -165,7 +165,20 @@ const findAll = async () => {
     `
   )
   return rows
-} 
+}
+
+
+const findLast10Rows = async () => {
+  const [rows] = await pool.query(
+    `
+    SELECT feeder_id,mfg_tooling_id,tooling_name,model,location,create_date,status
+    FROM (SELECT feeder_id,mfg_tooling_id,tooling_name,model,location,create_date,status
+          FROM feeder_details ORDER BY create_date DESC LIMIT 30) sub
+    ORDER BY create_date DESC
+    `
+  )
+  return rows
+}
 
 const findOverDue = async () => {
   const [rows] = await pool.query(
@@ -200,18 +213,18 @@ const findScrap = async () => {
   return rows
 } 
 
-const addFeeders = async (feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, createDate, updater, updateDate, status ) => {
+const addFeeders = async (feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, updater, status ) => {
   let [rows] = await pool.query(
     `
-    INSERT INTO feeder_details (feeder_id, mfg_tooling_id, tooling_name, 
+    INSERT INTO feeder_details (feeder_id, mfg_tooling_id, tooling_name,
                                 model, feeder_group, location, 
                                 creator, create_date, updater, 
                                 update_date, status)
-    VALUE (?, ?, ?
-           ?, ?, ?
-           ?, now(), ?
-           now(), "ok")`,
-    [feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, createDate, updater, updateDate, status ]
+    VALUE (?, ?, ?,
+           ?, ?, ?,
+           ?, now(), ?,
+           now(), ?)`,
+    [feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, updater, status ]
 
   )
 }
@@ -237,5 +250,6 @@ module.exports = {
   findOverDue,
   findRepair,
   findScrap,
+  findLast10Rows,
   addFeeders
 }

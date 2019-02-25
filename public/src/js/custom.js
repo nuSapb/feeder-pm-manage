@@ -246,3 +246,15 @@ if (typeof NProgress != 'undefined') {
         NProgress.done();
     });
 }
+
+
+$(document).ready(function() {
+    $('#addFeeder')
+    .ajaxForm({
+        url : 'localhost:8088/insert_feeders', // or whatever
+        dataType : 'json',
+        success : function (response) {
+            alert("The server says: " + response);
+        }
+    });
+});
