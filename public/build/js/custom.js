@@ -1330,7 +1330,7 @@ function init_cropper() {
 			$('#addFeeder #form-group .successMessage').fadeOut('fast');
 			alert('DONE')
 		}, 3000); // <-- time in milliseconds
-		
+
 	});
 
 
@@ -2539,6 +2539,21 @@ function init_calendar() {
 
 /* DATA TABLES */
 
+setDetails = (data) => {
+	console.log(data)
+	$('#inputBoxFeederId').val(data[0])
+	$('#inputBoxMfgToolingId').val(data[1])
+	$('#inputBoxToolingName').val(data[2])
+	$('#inputBoxLocation').val(data[5])
+	$('#inputBoxStatus').val(data[6])
+	$('#inputBoxStatus').prop('disabled', true);
+	const size = data[4]
+	console.log(size)
+	$('#selectSize').val(data[4])
+	$('#selectBrand').val(data[3])
+
+}
+
 function init_DataTables() {
 
 	console.log('run_datatables');
@@ -2573,8 +2588,17 @@ function init_DataTables() {
 					},
 				],
 				responsive: true
-			});
+			})
 		}
+
+		//TODO: init form data from datatable #datatable-buttons
+		let table = $('#datatable-buttons').DataTable();
+		$('#datatable-buttons tbody').on('click', 'tr', function () {
+			let data = table.row(this).data()
+			if(data) {
+				setDetails(data)
+			}
+		});
 	};
 
 	TableManageButtons = function () {

@@ -97,6 +97,17 @@ const findlastTenRows = async (ctx) => {
   await ctx.render('form', data)
 }
 
+const editHandler = async (ctx) => {
+  let data = {}
+  const listAllFeeder = await feeders.findAll()
+
+  data = {
+    listAllFeeder: listAllFeeder,
+    flash: ctx.flash
+  }
+  await ctx.render('edit_form', data)
+}
+
 const addFeeders = async ctx => {
 
   console.log("addFeeders")
@@ -116,17 +127,40 @@ const addFeeders = async ctx => {
         success: 'add feeder ' + feederId + ' done'
       }
       await ctx.redirect('/form')
-    } 
+    }
   }
   catch (err) {
     console.error(err)
     ctx.session.flash = {
-      error: 'fail to add new feeder => duplicate feeder ID' 
+      error: 'fail to add new feeder => duplicate feeder ID'
     }
     await ctx.redirect('/form')
   }
+}
 
+const editFeeders = async ctx => {
 
+  console.log("editFeeders")
+  const user = ctx.session.username
+  const creator = user
+  const updater = user
+  // const { feederId, mfgToolingId, toolingName, model, location, status } = ctx.request.body
+  try {
+    ctx.status = 200
+    if (ctx.status === 200) {
+      ctx.session.flash = {
+        success: 'edit feeder done'
+      }
+      await ctx.redirect('/edit_form')
+    }
+  }
+  catch (err) {
+    console.error(err)
+    ctx.session.flash = {
+      error: 'fail to edit feeder!'
+    }
+    await ctx.redirect('/edit_form')
+  }
 }
 
 const assignFeederGroup = (group) => {
@@ -143,12 +177,12 @@ const assignFeederGroup = (group) => {
   }
 }
 
-
-
 module.exports = {
   getHandler,
   listAllFeederDue,
   findAllFeeder,
   findlastTenRows,
-  addFeeders
+  editHandler,
+  addFeeders,
+  editFeeders
 }

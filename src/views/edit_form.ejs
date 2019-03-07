@@ -1,0 +1,274 @@
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index" class="site_title"><i class="fa fa-paw"></i> <span>FEEDER PM</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <% include menu_profile %>
+
+          <!-- /menu profile quick info -->
+
+          <br />
+
+          <!-- sidebar menu -->
+          <% include sidebar %>
+          <!-- /sidebar menu -->
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Lock">
+              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+      <!-- top navigation -->
+      <% include top_navigation %>
+      <!-- /top navigation -->
+
+      <!-- page content -->
+
+
+      <div class="right_col" role="main">
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>Edit Feeder</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2 id="comeon">Onhand Feeder Lists <small>Serch for feeder you want to edit</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                        class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Settings 1</a>
+                      </li>
+                      <li><a href="#">Settings 2</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                  Onhands Feeder @KETL
+                </p>
+                <table id="datatable-buttons" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>feeder_id</th>
+                      <th>mfg_tooling_id</th>
+                      <th>tooling_name</th>
+                      <th>brand</th>
+                      <th>size</th>
+                      <th>location</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    <% listAllFeeder.forEach((feeder) => { %>
+                    <tr>
+                      <td>
+                        <%- feeder.feeder_id %>
+                      </td>
+                      <td>
+                        <%- feeder.mfg_tooling_id %>
+                      </td>
+                      <td>
+                        <%- feeder.tooling_name %></a>
+                      </td>
+                      <td>
+                        <%- feeder.brand %></a>
+                      </td>
+                      <td>
+                        <%- feeder.size %></a>
+                      </td>
+                      <td>
+                        <%- feeder.location %></a>
+                      </td>
+                      <td>
+                        <%- feeder.status %></a>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-6 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Form edit feeder <small>Please insert infomation data below</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                        class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Settings 1</a>
+                      </li>
+                      <li><a href="#">Settings 2</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <br />
+                <form class="form-horizontal form-label-left" id="addFeeder" method="POST" action="/insert_feeders">
+
+                  <div class="form-group">
+                    <% if (flash && flash.error) { %>
+                    <p style="color: red;" id="errorMessage">
+                      <%= flash.error %>
+                    </p>
+                    <% } %>
+                    <% if (flash && flash.success) { %>
+                    <p style="color: green;" id="successMessage">
+                      <%= flash.success %>
+                    </p>
+                    <% } %>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Feeder ID</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <input type="text" class="form-control" id="inputBoxFeederId" name="feederId" placeholder="Default Input">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">MFG Tooling ID</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <input type="text" class="form-control" id="inputBoxMfgToolingId" name="mfgToolingId" placeholder="Default Input">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tooling Name</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <input type="text" class="form-control" id="inputBoxToolingName" name="toolingName" placeholder="Default Input">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Model</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="model">
+                        <option value="0">---Select Model---</option>
+                        <option value="KT08C">KT08C</option>
+                        <option value="KT12C">KT12C</option>
+                        <option value="KT16C">KT16C</option>
+                        <option value="KT24C">KT24C</option>
+                        <option value="KT32C">KT32C</option>
+                        <option value="KT44C">KT44C</option>
+                        <option value="KT56C">KT56C</option>
+                        <option value="KT72C">KT72C</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Brand</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" id="selectBrand" name="model">
+                        <option value="0">---Select Brand---</option>
+                        <option value="NXT">NXT</option>
+                        <option value="ASM">ASM</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Size</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" id="selectSize" name="size">
+                        <option value="0">---Select Size---</option>
+                        <option value="8">8 mm</option>
+                        <option value="12">12 mm</option>
+                        <option value="16">16 mm</option>
+                        <option value="18">18 mm</option>
+                        <option value="24">24 mm</option>
+                        <option value="32">32 mm</option>
+                        <option value="48">48 mm</option>
+                        <option value="56">56 mm</option>
+                        <option value="68">68 mm</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Location</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <input type="text" class="form-control" id="inputBoxLocation" name="location" placeholder="Default Input">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <input type="text" class="form-control" id="inputBoxStatus" name="status" placeholder="Default Input">
+                    </div>
+                  </div>
+                  <div class="ln_solid"></div>
+                  <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                      <button type="button" class="btn btn-primary">Cancel</button>
+                      <button type="reset" class="btn btn-primary">Reset</button>
+                      <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- /page content -->
+  </div>
+  </div>
+
+
+</body>
+
+<script>
+
+  setTimeout(() => {
+    $('#successMessage').fadeOut('slow');
+    $('#errorMessage').fadeOut('slow');
+    $('#emptyMessage').fadeOut('fast');
+  }, 3000) // <-- time in milliseconds
+
+</script>

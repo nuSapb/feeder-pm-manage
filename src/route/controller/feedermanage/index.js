@@ -33,9 +33,12 @@ router.get('/chartjs', async ctx => {
 
 router.get('/form',checkAuth, feeders.findlastTenRows)
 
+router.get('/edit_form', feeders.editHandler)
+
+
 router.post('/insert_feeders', checkAuth, feeders.addFeeders)
 
-router.get('/tables', checkAuth, feeders.findAllFeeder)
+router.get('/tables', feeders.findAllFeeder)
 
 
 
