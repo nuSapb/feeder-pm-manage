@@ -2544,13 +2544,26 @@ setDetails = (data) => {
 	$('#inputBoxFeederId').val(data[0])
 	$('#inputBoxMfgToolingId').val(data[1])
 	$('#inputBoxToolingName').val(data[2])
-	$('#inputBoxLocation').val(data[5])
-	$('#inputBoxStatus').val(data[6])
-	$('#inputBoxStatus').prop('disabled', true);
-	const size = data[4]
-	console.log(size)
-	$('#selectSize').val(data[4])
 	$('#selectBrand').val(data[3])
+	$('#inputBoxModel').val(data[4])
+	$('#selectSize').val(data[5])
+	$('#inputBoxLocation').val(data[6])
+	$('#inputBoxStatus').val(data[7])
+	$('#inputBoxStatus').prop('disabled', true);
+
+}
+
+setScrapDetails = (data) => {
+	console.log(data)
+	$('#inputBoxFeederId').val(data[0])
+	$('#inputBoxMfgToolingId').val(data[1])
+	$('#inputBoxToolingName').val(data[2])
+	$('#inputBoxBrand').val(data[3])
+	$('#inputBoxModel').val(data[4])
+	$('#inputBoxSize').val(data[5])
+	$('#inputBoxLocation').val(data[6])
+	$('#inputBoxStatus').val('Scrap')
+	$('#inputBoxStatus').prop('disabled', true);
 
 }
 
@@ -2597,6 +2610,100 @@ function init_DataTables() {
 			let data = table.row(this).data()
 			if(data) {
 				setDetails(data)
+			}
+		});
+	};
+
+	TableManageButtons = function () {
+		"use strict";
+		return {
+			init: function () {
+				handleDataTableButtons();
+			}
+		};
+	}();
+
+	$('#datatable').dataTable();
+
+	$('#datatable-keytable').DataTable({
+		keys: true
+	});
+
+	$('#datatable-responsive').DataTable();
+
+	$('#datatable-scroller').DataTable({
+		ajax: "js/datatables/json/scroller-demo.json",
+		deferRender: true,
+		scrollY: 380,
+		scrollCollapse: true,
+		scroller: true
+	});
+
+	$('#datatable-fixed-header').DataTable({
+		fixedHeader: true
+	});
+
+	var $datatable = $('#datatable-checkbox');
+
+	$datatable.dataTable({
+		'order': [[1, 'asc']],
+		'columnDefs': [
+			{ orderable: false, targets: [0] }
+		]
+	});
+	$datatable.on('draw.dt', function () {
+		$('checkbox input').iCheck({
+			checkboxClass: 'icheckbox_flat-green'
+		});
+	});
+
+	TableManageButtons.init();
+
+};
+
+function init_DataTables_scrap() {
+
+	console.log('run_datatables');
+
+	if (typeof ($.fn.DataTable) === 'undefined') { return; }
+	console.log('init_DataTables_scrap');
+
+	var handleDataTableButtons = function () {
+		if ($("#datatable-scrap").length) {
+			$("#datatable-scrap").DataTable({
+				dom: "Blfrtip",
+				buttons: [
+					{
+						extend: "copy",
+						className: "btn-sm"
+					},
+					{
+						extend: "csv",
+						className: "btn-sm"
+					},
+					{
+						extend: "excel",
+						className: "btn-sm"
+					},
+					{
+						extend: "pdfHtml5",
+						className: "btn-sm"
+					},
+					{
+						extend: "print",
+						className: "btn-sm"
+					},
+				],
+				responsive: true
+			})
+		}
+
+		//TODO: init form data from datatable #datatable-buttons
+		let table = $('#datatable-scrap').DataTable();
+		$('#datatable-scrap tbody').on('click', 'tr', function () {
+			let data = table.row(this).data()
+			if(data) {
+				setScrapDetails(data)
 			}
 		});
 	};
@@ -5112,6 +5219,7 @@ $(document).ready(function () {
 	init_select2();
 	init_validator();
 	init_DataTables();
+	init_DataTables_scrap();
 	init_chart_doughnut();
 	init_gauge();
 	init_PNotify();

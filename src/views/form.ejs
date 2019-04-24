@@ -120,6 +120,17 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Brand</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="brands">
+                          <option value="0">---Select Model---</option>
+                          <option value="ASM">ASM</option>
+                          <option value="NXT">NXT</option>
+
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Model</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
                         <select class="form-control" name="model">
@@ -205,6 +216,7 @@
                         <th>feeder_id</th>
                         <th>mfg_tooling_id</th>
                         <th>tooling_name</th>
+                        <th>brand</th>
                         <th>model</th>
                         <th>location</th>
                         <th>create_date</th>
@@ -224,6 +236,9 @@
                         </td>
                         <td>
                           <%- feeder.tooling_name %></a>
+                        </td>
+                        <td>
+                          <%- feeder.brand %></a>
                         </td>
                         <td>
                           <%- feeder.model %></a>

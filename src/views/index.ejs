@@ -45,7 +45,7 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        
+
         <!-- top tiles -->
         <div class="row tile_count">
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -53,12 +53,12 @@
             <div class="count">
               <a href="/tables"><%= allFeeder[0].count %></a>
             </div>
-            <span class="count_bottom"><i class="green">+4 units </i> From last Week</span>
+            <!-- <span class="count_bottom"><i class="green">+4 units </i> From last Week</span> -->
           </div>
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-clock-o"></i> PM Due in this month</span>
             <div class="count yellow">
-                <a href="/tables_dynamic" style="color:#EAC435"><%= due[0].count %></a> 
+              <a href="/tables_dynamic" style="color:#EAC435"><%= due[0].count %></a>
             </div>
             <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
           </div>
@@ -157,9 +157,38 @@
 
         </div>
         <br /> -->
-
         <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-12">
+          <!-- pie chart -->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Overall <small>Overall PM</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                        class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Settings 1</a>
+                      </li>
+                      <li><a href="#">Settings 2</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content2">
+                <div id="graph_donut2" style="width:100%; height:250px;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- /Pie chart -->
+
+          <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel tile fixed_height_320">
               <div class="x_title">
                 <h2>PM Due By Size</h2>
@@ -269,151 +298,26 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>Other</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                          aria-valuemax="100" style="width: 2%;">
-                          <span class="sr-only">2% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span><%= otherSizeDue[0].count %></span>
-                    </div>
-                    <div class="clearfix"></div>
+                  <div class="w_left w_25">
+                    <span>Other</span>
                   </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="x_panel tile fixed_height_320 overflow_hidden">
-              <div class="x_title">
-                <h2>PM Take Action</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                        class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Settings 1</a>
-                      </li>
-                      <li><a href="#">Settings 2</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a>
-                  </li>
-                </ul>
-                <div class="clearfix"></div>
-              </div>
-              <div class="x_content">
-                <table class="" style="width:100%">
-                  <tr>
-                    <th style="width:37%;">
-                      <p>Top 5</p>
-                    </th>
-                    <th>
-                      <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                        <p class="">Size</p>
+                  <div class="w_center w_55">
+                    <div class="progress">
+                      <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                        aria-valuemax="100" style="width: 2%;">
+                        <span class="sr-only">2% Complete</span>
                       </div>
-                      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                        <p class="">Progress</p>
-                      </div>
-                    </th>
-                  </tr>
-                  <tr>
-                    <td>
-                      <canvas class="canvasDoughnutIndex" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                    </td>
-                    <td>
-                      <table class="tile_info">
-                        <tr>
-                          <td>
-                            <p><i class="fa fa-square blue"></i>8 mm. </p>
-                          </td>
-                          <td>30%</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p><i class="fa fa-square green"></i>12 mm. </p>
-                          </td>
-                          <td>10%</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p><i class="fa fa-square purple"></i>16 mm. </p>
-                          </td>
-                          <td>20%</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p><i class="fa fa-square aero"></i>24 mm. </p>
-                          </td>
-                          <td>15%</td>
-                        </tr>
-           
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
-              <div class="x_title">
-                <h2>OVERALL Progress</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                        class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Settings 1</a>
-                      </li>
-                      <li><a href="#">Settings 2</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a>
-                  </li>
-                </ul>
-                <div class="clearfix"></div>
-              </div>
-              <div class="x_content">
-                <div class="dashboard-widget-content">
-                  <ul class="quick-list">
-                    <li><i class="fa fa-bars"></i><a href="/index2">NXT</a>
-                    </li>
-                    <li><i class="fa fa-bars"></i><a href="/index3">ASM</a>
-                    </li>
-                    <li><i class="fa fa-bar-chart"></i><a href="#">Scrap</a> </li>
-                    </li>
-                  </ul>
-
-                  <div class="sidebar-widget">
-                    <h4>Profile Completion</h4>
-                    <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
-                    <div class="goal-wrapper">
-                      <span id="gauge-text" class="gauge-value pull-left">0</span>
-                      <span class="gauge-value pull-left">%</span>
-                      <span id="goal-text" class="goal-value pull-right">100%</span>
                     </div>
                   </div>
+                  <div class="w_right w_20">
+                    <span><%= otherSizeDue[0].count %></span>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
+
               </div>
             </div>
           </div>
-
         </div>
 
 
@@ -431,6 +335,67 @@
   </div>
   </div>
 
+  <script src="/-/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/-/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="/-/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="/-/vendors/nprogress/nprogress.js"></script>
+  <!-- morris.js -->
+  <script src="/-/vendors/raphael/raphael.min.js"></script>
+  <script src="/-/vendors/morris.js/morris.min.js"></script>
+  <script>
+    async function init_morris_charts2() {
+      let response = await fetch(`/feederdata`)
+      let data = await response.json()
+      console.log(data)
+      let scrap = data.scrap[0].count
+      let allFeeder = data.allFeeder[0].count + scrap
+      console.log("allFeeder = " + allFeeder)
+      let due = data.due[0].count
+      console.log("due = " + due)
+      let overDue = data.overDue[0].count
+      console.log("overDue = " + overDue)
+      let pDue = ((due * 100) / allFeeder).toFixed(2)
+      console.log("pDue = " + pDue)
+      let pOverDue = ((overDue * 100) / allFeeder).toFixed(2)
+      let pScrap = ((scrap * 100) / allFeeder).toFixed(2)
+
+      let pNormal = (100 - pDue - pOverDue).toFixed(2)
 
 
+
+
+      if (typeof (Morris) === 'undefined') { return; }
+      console.log('init_morris_charts');
+
+      if ($('#graph_donut2').length) {
+
+        Morris.Donut({
+          element: 'graph_donut2',
+          data: [
+            { label: 'Normal', value: pNormal },
+            { label: 'Due', value: pDue },
+            { label: 'Overdue', value: pOverDue },
+            { label: 'Scrap', value: pScrap },
+          ],
+          colors: ['#16C172', '#FCAB10', '#F8333C', '#A29C9B'],
+          formatter: function (y) {
+            return y + "%";
+          },
+          resize: true
+        });
+
+      }
+
+    }
+
+
+
+    $(document).ready(() => {
+      init_morris_charts2()
+      console.log('morris chart2 work')
+    })
+  </script>
 </body>
