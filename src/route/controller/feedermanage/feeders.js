@@ -47,6 +47,46 @@ const getHandler = async ctx => {
   await ctx.render('index', data)
 }
 
+const getData = async ctx => {
+  console.log(ctx.session.username)
+  let data = {}
+  let user = ctx.session.username
+  console.log(user)
+  const userDetail = await users.findUserByUsername(user)
+  const allFeeder = await feeders.countFeeder()
+  const result = await feeders.findFeeders()
+  const due = await feeders.countDue()
+  const overDue = await feeders.countOverDue()
+  const onGoing = await feeders.countOngoing()
+  const scrap = await feeders.countScrap()
+  const repair = await feeders.countRepair()
+  const size8Due = await feeders.count8Due()
+  const size12Due = await feeders.count12Due()
+  const size16Due = await feeders.count16Due()
+  const size24Due = await feeders.count24Due()
+  const size32Due = await feeders.count32Due()
+  const otherSizeDue = await feeders.countOtherDue()
+
+  data = {
+    info: result,
+    userDetail: userDetail,
+    allFeeder: allFeeder,
+    due: due,
+    overDue: overDue,
+    onGoing, onGoing,
+    scrap: scrap,
+    repair: repair,
+    size8Due: size8Due,
+    size12Due: size12Due,
+    size16Due: size16Due,
+    size24Due: size24Due,
+    size32Due: size32Due,
+    otherSizeDue: otherSizeDue,
+  }
+
+  ctx.body = data
+}
+
 const listAllFeederDue = async (ctx) => {
   let data = {}
   const listAllDue = await feeders.findAllDue()
@@ -85,7 +125,7 @@ const findAllFeeder = async (ctx) => {
 
 const findlastTenRows = async (ctx) => {
   let data = {}
-  const last10Rows = await feeders.findLast10Rows()
+  const last10Rows = await feeders.findLast30Rows()
   console.log(last10Rows)
   ctx.session.flash = {
     success: 'add feeder done'
@@ -97,18 +137,51 @@ const findlastTenRows = async (ctx) => {
   await ctx.render('form', data)
 }
 
+const editHandler = async (ctx) => {
+  let data = {}
+  const listAllFeeder = await feeders.findAll()
+  console.log(listAllFeeder)
+
+  ctx.session.flash = {
+    success: 'edit feeder done'
+  }
+
+  data = {
+    listAllFeeder: listAllFeeder,
+    flash: ctx.flash
+  }
+  await ctx.render('edit_form', data)
+}
+
+const scrapHandler = async (ctx) => {
+  let data = {}
+  const listAllFeeder = await feeders.findAll()
+  console.log(listAllFeeder)
+
+  ctx.session.flash = {
+    success: 'scrap feeder done'
+  }
+
+  data = {
+    listAllFeeder: listAllFeeder,
+    flash: ctx.flash
+  }
+  await ctx.render('scrap_form', data)
+}
+
 const addFeeders = async ctx => {
 
   console.log("addFeeders")
   console.log(ctx.request.body)
-  const feederGroup = assignFeederGroup()
-  console.log("feederGroup= " + feederGroup)
+  const pm_group = assignpmGroup()
+  console.log("pmGroup= " + pm_group)
   const user = ctx.session.username
-  const creator = user
+  console.log("User is : "+ user)
+  const creater = user
   const updater = user
-  const { feederId, mfgToolingId, toolingName, model, location, status } = ctx.request.body
+  const { feederId, mfgToolingId, toolingName, model, brand, size, location, status } = ctx.request.body
   try {
-    await feeders.addFeeders(feederId, mfgToolingId, toolingName, model, feederGroup, location, creator, updater, status)
+    await feeders.addFeeders(feederId, mfgToolingId, toolingName, model, brand, size, location, status, pm_group, creater, updater )
     console.log("Insert new feeder complete")
     ctx.status = 200
     if (ctx.status === 200) {
@@ -116,20 +189,73 @@ const addFeeders = async ctx => {
         success: 'add feeder ' + feederId + ' done'
       }
       await ctx.redirect('/form')
-    } 
+    }
   }
   catch (err) {
     console.error(err)
     ctx.session.flash = {
-      error: 'fail to add new feeder => duplicate feeder ID' 
+      error: 'fail to add new feeder => duplicate feeder ID'
     }
     await ctx.redirect('/form')
   }
-
-
 }
 
-const assignFeederGroup = (group) => {
+const editFeeders = async ctx => {
+
+  console.log("editFeeders")
+  const user = ctx.session.username
+  const updater = user
+  const { feederId, mfgToolingId, toolingName, brand, model, size, location } = ctx.request.body
+  try {
+    feeders.updateFeeders(feederId, mfgToolingId, toolingName, brand, model, size, location, updater)
+    console.log("Update new data complete")
+    ctx.status = 200
+    if (ctx.status === 200) {
+      ctx.session.flash = {
+        success: 'edit feeder done'
+      }
+      await ctx.redirect('/edit_form')
+    }
+  }
+  catch (err) {
+    console.error(err)
+    ctx.status = 404
+    ctx.session.flash = {
+      error: 'fail to edit feeder!'
+    }
+    await ctx.redirect('/edit_form')
+  }
+}
+
+const scrapFeeders = async ctx => {
+
+  console.log("scrapFeeders")
+  const user = ctx.session.username
+  const updater = user
+  const { feederId } = ctx.request.body
+  const status = 'Scrap'
+  try {
+    feeders.scrapFeeders(feederId, updater, status)
+    console.log("Update new data complete")
+    ctx.status = 200
+    if (ctx.status === 200) {
+      ctx.session.flash = {
+        success: 'scrap feeder done'
+      }
+      await ctx.redirect('/scrap_form')
+    }
+  }
+  catch (err) {
+    console.error(err)
+    ctx.status = 404
+    ctx.session.flash = {
+      error: 'fail to scrap feeder!'
+    }
+    await ctx.redirect('/scrap_form')
+  }
+}
+
+const assignpmGroup = (group) => {
   const d = new Date()
   const currentMonth = d.getMonth() + 1
   if ([1, 2, 3].includes(currentMonth)) {
@@ -143,12 +269,15 @@ const assignFeederGroup = (group) => {
   }
 }
 
-
-
 module.exports = {
   getHandler,
+  getData,
   listAllFeederDue,
   findAllFeeder,
   findlastTenRows,
-  addFeeders
+  editHandler,
+  scrapHandler,
+  addFeeders,
+  editFeeders,
+  scrapFeeders
 }
