@@ -1,47 +1,81 @@
-<link rel="stylesheet" href="/-/vendors/w3/w3.css">
+<link rel="stylesheet" href="/-/vendors/w3/w3.css" />
 
 <div class="w3-bar w3-white w3-large">
-    <a href="#" class="w3-bar-item w3-button w3-blue-grey w3-mobile"><i class="fa fa-credit-card w3-margin-right"></i>Feeder
-        PM Management</a>
-    <a href="/signup" class="w3-bar-item w3-button w3-right w3-light-grey w3-mobile">Join us</a>
+  <a href="#" class="w3-bar-item w3-button w3-blue-grey w3-mobile"
+    ><i class="fa fa-credit-card w3-margin-right"></i>FEEDER PM MANAGEMENT</a
+  >
+  <a
+    href="/signup"
+    class="w3-bar-item w3-button w3-right w3-light-grey w3-mobile"
+    >สมัครสมาชิก</a
+  >
 </div>
 <div style="max-width:1500px">
-    <img class="w3-image" src="/-/images/background.jpg" alt="Photo by Bruno Kelzer on Unsplash" style="min-width:1000px"
-        width="1500" height="500">
-    <div class="w3-display-middle w3-padding w3-col l4 m6">
-        <div class="w3-container w3-blue-grey  w3-padding">
-            <h3><i class="fa fa-login w3-margin-right"></i>Sign in</h3>
-        </div>
-        <div class="w3-container w3-white w3-padding-16 w3-opacity w3-hover-opacity-off" style="display:block">
-            <form method="post" action="/signin">
-                <div id="signin">
-                    <% if (flash && flash.error) { %>
-                    <p style="color: red;">
-                        <%= flash.error %>
-                    </p>
-                    <% } %>
-                    <% if (flash && flash.success) { %>
-                    <p style="color: green;">
-                        <%= flash.success %>
-                    </p>
-                    <% } %>
-                    <div class="w3-row-padding" style="margin:0 -16px;">
-                        <div class="w3-full w3-margin-bottom">
-                            <label><i class="fa fa-user"></i> Username</label>
-                            <input class="w3-input w3-border" type="text" placeholder="username@mail.com" name="username"
-                                required>
-                        </div>
-                    </div>
-                    <div class="w3-row-padding" style="margin:8px -16px;">
-                        <div class="w3-full w3-margin-bottom">
-                            <label><i class="fa fa-key"></i> Password</label>
-                            <input class="w3-input w3-border" type="password" name="password">
-                        </div>
-                    </div>
-                    <button class="w3-button w3-black w3-padding-large w3-round" type="submit" value="Login"> Sign in</button>
-                    <button class="w3-button w3-light-gray w3-padding-large w3-round" type="reset" value="Reset"> Reset</button>
-                </div>
-            </form>
-        </div>
+  <img
+    class="w3-image"
+    src="/-/images/robot_feeder.jpg"
+    alt="Photo by Shane Aldendorff on Unsplashent"
+    style="min-width:1000px"
+    width="1500"
+    height="400"
+  />
+  <div class="w3-display-middle w3-padding w3-col l4 m6">
+    <div class="w3-container w3-blue-grey  w3-padding">
+      <h3><i class="fa fa-login w3-margin-right"></i>เข้าสู่ระบบ</h3>
     </div>
+    <div
+      class="w3-container w3-white w3-padding-16 w3-opacity w3-hover-opacity-off"
+      style="display:block"
+    >
+      <form method="post" action="/signin">
+        <div id="signin">
+          <% if (flash && flash.error) { %>
+          <p style="color: red;">
+            <%= flash.error %>
+          </p>
+          <% } %> <% if (flash && flash.success) { %>
+          <p style="color: green;">
+            <%= flash.success %>
+          </p>
+          <% } %>
+          <div class="w3-row-padding" style="margin:0 -16px;">
+            <div class="w3-full w3-margin-bottom">
+              <label><i class="fa fa-user"></i> Username</label>
+              <input
+                class="w3-input w3-border"
+                type="text"
+                placeholder="username@mail.com"
+                name="username"
+                required
+              />
+            </div>
+          </div>
+          <div class="w3-row-padding" style="margin:8px -16px;">
+            <div class="w3-full w3-margin-bottom">
+              <label><i class="fa fa-key"></i> Password</label>
+              <input
+                class="w3-input w3-border"
+                type="password"
+                name="password"
+              />
+            </div>
+          </div>
+          <button
+            class="w3-button w3-black w3-padding-large w3-round"
+            type="submit"
+            value="Login"
+          >
+            Sign in
+          </button>
+          <button
+            class="w3-button w3-light-gray w3-padding-large w3-round"
+            type="reset"
+            value="Reset"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
