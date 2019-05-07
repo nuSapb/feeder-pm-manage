@@ -13,12 +13,12 @@ const checkAuth = async (ctx, next) => {
     console.log("If checkAuth", ctx.session.username)
     await next()
   } else {
-    console.log("Else checkAuth", ctx.session.username)
+    console.log("Else checkAuth", ctx.username)
     return ctx.redirect("/")
   }
 }
 
-router.get("/index", checkAuth, feeders.getHandler)
+router.get("/index", feeders.getHandler)
 
 router.get("/index2", checkAuth, index2.getHandler)
 
@@ -26,7 +26,7 @@ router.get("/index3", checkAuth, index3.getHandler)
 
 router.get("/feederdata", checkAuth, feeders.getData)
 
-router.get("/chartjs", async ctx => {
+router.get("/chartjs", async (ctx) => {
   await ctx.render("chartjs")
 })
 
@@ -37,7 +37,7 @@ router.get("/scrap_form", checkAuth, feeders.scrapHandler)
 router.post("/insert_feeders", checkAuth, feeders.addFeeders)
 router.post("/edit_feeders", checkAuth, feeders.editFeeders)
 router.post("/scrap_feeders", checkAuth, feeders.scrapFeeders)
-router.post("/manual_pm_feeders", checkAuth, feeders.manualPmHandler)
+router.post("/manual_pm_feeders", feeders.manualPmHandler)
 router.get("/tables", feeders.findAllFeeder)
 router.get("/tables_dynamic", checkAuth, feeders.listAllFeederDue)
 router.post("/testapi", testapi.log)
