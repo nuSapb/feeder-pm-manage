@@ -1,11 +1,11 @@
-const pool = require('../db')
+const pool = require("../db")
 
 const register = async (username, password, fullname) => {
   if (await checkHasEmail(email)) {
   }
 }
 
-const saveUser = async signupData => {
+const saveUser = async (signupData) => {
   const [results] = await pool.query(
     `
 			insert into mas_user(
@@ -27,7 +27,7 @@ const saveUser = async signupData => {
   console.log(results)
 }
 
-const findUserByUsername = async username => {
+const findUserByUsername = async (username) => {
   const [results] = await pool.query(
     `
 			select usr_id_pk as id,usr_fullname as fullname,usr_password as password,usr_username as username,
@@ -42,7 +42,7 @@ const findUserByUsername = async username => {
   return results
 }
 
-const checkHasUser = async username => {
+const checkHasUser = async (username) => {
   const [rows] = await pool.query(
     `
 	SELECT usr_id_pk, password
@@ -61,9 +61,22 @@ const listRole = async () => {
   return rows
 }
 
+const userRole = async (username) => {
+  const [rows] = await pool.query(
+    `
+	SELECT usr_rol_id_fk
+	FROM mas_user
+	WHERE USR_USERNAME = ?
+	`,
+    [username]
+  )
+  return rows
+}
+
 module.exports = {
   register,
   saveUser,
   findUserByUsername,
-  checkHasUser
+  checkHasUser,
+  userRole
 }

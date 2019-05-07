@@ -7,7 +7,7 @@ const feeders = require("../../../models/feeders")
 const config = require("../../../config")
 const users = require("../../../models/user")
 
-const getHandler = async ctx => {
+const getHandler = async (ctx) => {
   console.log(ctx.session.username)
   let data = {}
   let user = ctx.session.username
@@ -48,7 +48,7 @@ const getHandler = async ctx => {
   await ctx.render("index", data)
 }
 
-const getData = async ctx => {
+const getData = async (ctx) => {
   console.log(ctx.session.username)
   let data = {}
   let user = ctx.session.username
@@ -89,7 +89,7 @@ const getData = async ctx => {
   ctx.body = data
 }
 
-const listAllFeederDue = async ctx => {
+const listAllFeederDue = async (ctx) => {
   let data = {}
   const listAllDue = await feeders.findAllDue()
   console.log(listAllDue)
@@ -99,7 +99,7 @@ const listAllFeederDue = async ctx => {
   await ctx.render("tables_dynamics", data)
 }
 
-const listAllOnhands = async ctx => {
+const listAllOnhands = async (ctx) => {
   let data = {}
   const listAllDue = await feeders.findAllDue()
   console.log(listAllDue)
@@ -109,7 +109,7 @@ const listAllOnhands = async ctx => {
   await ctx.render("tables_dynamics", data)
 }
 
-const findAllFeeder = async ctx => {
+const findAllFeeder = async (ctx) => {
   let data = {}
   const listAllFeeder = await feeders.findAll()
   const listAllOverDue = await feeders.findOverDue()
@@ -125,7 +125,7 @@ const findAllFeeder = async ctx => {
   await ctx.render("tables", data)
 }
 
-const findlastTenRows = async ctx => {
+const findlastTenRows = async (ctx) => {
   let data = {}
   const last10Rows = await feeders.findLast30Rows()
   console.log(last10Rows)
@@ -139,7 +139,7 @@ const findlastTenRows = async ctx => {
   await ctx.render("form", data)
 }
 
-const editHandler = async ctx => {
+const editHandler = async (ctx) => {
   let data = {}
   const listAllFeeder = await feeders.findAll()
   console.log(listAllFeeder)
@@ -155,7 +155,7 @@ const editHandler = async ctx => {
   await ctx.render("edit_form", data)
 }
 
-const manualPmHandler = async ctx => {
+const manualPmHandler = async (ctx) => {
   let data = {}
   const listAllFeeder = await feeders.findAll()
   console.log(listAllFeeder)
@@ -171,7 +171,7 @@ const manualPmHandler = async ctx => {
   await ctx.render("manual_pm_form", data)
 }
 
-const scrapHandler = async ctx => {
+const scrapHandler = async (ctx) => {
   let data = {}
   const listAllFeeder = await feeders.findAll()
   console.log(listAllFeeder)
@@ -187,7 +187,7 @@ const scrapHandler = async ctx => {
   await ctx.render("scrap_form", data)
 }
 
-const addFeeders = async ctx => {
+const addFeeders = async (ctx) => {
   console.log("addFeeders")
   console.log(ctx.request.body)
   const pm_group = assignpmGroup()
@@ -237,7 +237,7 @@ const addFeeders = async ctx => {
   }
 }
 
-const editFeeders = async ctx => {
+const editFeeders = async (ctx) => {
   console.log("editFeeders")
   const user = ctx.session.username
   const updater = user
@@ -279,7 +279,7 @@ const editFeeders = async ctx => {
   }
 }
 
-const scrapFeeders = async ctx => {
+const scrapFeeders = async (ctx) => {
   console.log("scrapFeeders")
   const user = ctx.session.username
   const updater = user
@@ -305,7 +305,7 @@ const scrapFeeders = async ctx => {
   }
 }
 
-const assignpmGroup = group => {
+const assignpmGroup = (group) => {
   const d = new Date()
   const currentMonth = d.getMonth() + 1
   if ([1, 2, 3].includes(currentMonth)) {

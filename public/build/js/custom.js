@@ -2307,11 +2307,11 @@ function init_SmartWizard() {
   }
   console.log("init_SmartWizard")
 
-//   $("#wizard").smartWizard()
-$("#wizard").smartWizard({
+  //   $("#wizard").smartWizard()
+  $("#wizard").smartWizard({
     onFinish: function() {
-      alert("FINISH")
-      console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+      $("#textAreaValue").val("PM completed by manual.")
+      alert("ได้ทำการบันทึกผลการทำ Manual PM เรียบร้อยแล้ว")
     }
   })
 
@@ -2322,8 +2322,6 @@ $("#wizard").smartWizard({
   $(".buttonNext").addClass("btn btn-success")
   $(".buttonPrevious").addClass("btn btn-primary")
   $(".buttonFinish").addClass("btn btn-default")
-
-
 }
 
 /* VALIDATOR */

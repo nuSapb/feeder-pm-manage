@@ -18,7 +18,18 @@ const checkAuth = async (ctx, next) => {
   }
 }
 
-router.get("/index", feeders.getHandler)
+const userRole = async (ctx, next) => {
+  console.log(ctx.session.role)
+  if (ctx.session.role === "admin") {
+    console.log("admin", ctx.session.role)
+    await next()
+  } else {
+    console.log("Else checkAuth", ctx.username)
+    return ctx.render("page_403")
+  }
+}
+
+router.get("/index", checkAuth, feeders.getHandler)
 
 router.get("/index2", checkAuth, index2.getHandler)
 
@@ -37,11 +48,13 @@ router.get("/scrap_form", checkAuth, feeders.scrapHandler)
 router.post("/insert_feeders", checkAuth, feeders.addFeeders)
 router.post("/edit_feeders", checkAuth, feeders.editFeeders)
 router.post("/scrap_feeders", checkAuth, feeders.scrapFeeders)
-router.post("/manual_pm_feeders", feeders.manualPmHandler)
-router.get("/tables", feeders.findAllFeeder)
+router.post("/manual_pm_feeders", checkAuth, feeders.manualPmHandler)
+router.get("/tables", checkAuth, feeders.findAllFeeder)
 router.get("/tables_dynamic", checkAuth, feeders.listAllFeederDue)
 router.post("/testapi", testapi.log)
-router.post("/update_pm", pm.postHandler)
+router.post("/update_pm", checkAuth, pm.postHandler)
+router.get("/approval", userRole, feeders.scrapHandler)
+
 /**
  * the last route get * and render 404error pasge
  */
