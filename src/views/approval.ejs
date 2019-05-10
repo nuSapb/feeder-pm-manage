@@ -58,7 +58,7 @@
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
               <div class="x_title">
-                <h2 id="comeon">ข้อมูล Feeder ทั้งหมด </h2>
+                <h2 id="comeon">ข้อมูล Feeder PM by manual ทั้งหมด </h2>
                 <ul class="nav navbar-right panel_toolbox">
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
@@ -79,20 +79,16 @@
               </div>
               <div class="x_content">
                 <p class="text-muted font-13 m-b-30">
-                  Onhands Feeder @KETL
+                  Onhands Feeder PM by manual waiting for approve
                 </p>
-                <table id="datatable-scrap" class="table table-striped table-bordered">
+                <table id="datatable-approve" class="table table-hover">
                   <thead>
                     <tr>
                       <th>feeder_id</th>
-                      <th>mfg_tooling_id</th>
-                      <th>tooling_name</th>
-                      <th>brand</th>
-                      <th>Model</th>
-                      <th>size</th>
-                      <th>location</th>
                       <th>status</th>
-                      <th>update_date</th>
+                      <th>updater</th>
+                      <th>pm_date</th>
+                      <th>detail</th>
                     </tr>
                   </thead>
 
@@ -104,31 +100,17 @@
                         <%- feeder.feeder_id %>
                       </td>
                       <td>
-                        <%- feeder.mfg_tooling_id %>
+                        <%- feeder.status %>
                       </td>
                       <td>
-                        <%- feeder.tooling_name %></a>
+                        <%- feeder.updater %></a>
                       </td>
                       <td>
-                        <%- feeder.brand %></a>
+                        <%- feeder.update_date %></a>
                       </td>
                       <td>
-                        <%- feeder.model %></a>
+                        <%- feeder.detail %></a>
                       </td>
-                      <td>
-                        <%- feeder.size %></a>
-                      </td>
-                      <td>
-                        <%- feeder.location %></a>
-                      </td>
-                      <td>
-                        <%- feeder.status %></a>
-                      </td>
-                      <td>
-                        <% let t = String(feeder.update_date).split(" ", 5);%>
-                        <%- t %></a>
-                      </td>
-
                     </tr>
                     <% }) %>
                   </tbody>
@@ -138,120 +120,85 @@
           </div>
         </div>
         <div class="row">
-
-          <div class="col-md-6 col-xs-12">
-            <div class="x_panel">
-              <div class="x_title">
-                <h2>ฟอร์ม Scrap feeder <small>โปรดตรวจสอบข้อมูลให้ถูกต้อง ก่อนทำการบันทึก</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                        class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Settings 1</a>
-                      </li>
-                      <li><a href="#">Settings 2</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a>
-                  </li>
-                </ul>
-                <div class="clearfix"></div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="container">
+              <h2>Modal Example</h2>
+              <!-- Button to Open the Modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Open modal
+              </button>
+            
+              <!-- The Modal -->
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                  
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Modal Heading</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      Modal body..
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                  </div>
+                </div>
               </div>
-              <div class="x_content">
-                <br />
-                <form class="form-horizontal form-label-left" id="scrapFeeder" method="POST" action="/scrap_feeders">
 
-                  <div class="form-group">
-                    <% if (flash && flash.error) { %>
-                    <p style="color: red;" id="errorMessage">
-                      <%= flash.error %>
-                    </p>
-                    <% } %>
-                    <% if (flash && flash.success) { %>
-                    <p style="color: green;" id="successMessage">
-                      <%= flash.success %>
-                    </p>
-                    <% } %>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Feeder ID</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <input type="text" class="form-control" id="inputBoxFeederId" name="feederId"
-                        placeholder="Default Input">
+              <div class="modal fade" id="ModalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Please see the details before approve</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group" id="approve">
+                                <input type="hidden" class="form-control" id="feederId" name="feederId">
+                                <label for="feederId">Feeder ID</label>
+                                <input type="input" class="form-control" id="inputFeeederId" name="feederId" readonly>
+            
+                                <label for="inputStatus">Status</label>
+                                <input type="input" class="form-control" id="inputStatus" name="inputStatus" readonly>
+            
+                                <label for="pmBy">PM By</label>
+                                <input type="input" class="form-control" id="inputPmBy" name="inputPmBy" readonly>
+            
+                                <label for="pmDate">PM Date</label>
+                                <input type="input" class="form-control" id="inputPmDate" name="inputPmDate" readonly>
+            
+                                <label for="detail">Detail</label>
+                                <input type="input" class="form-control" id="inputDetail" name="inputDetail" readonly> 
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="btnApprove" data-dismiss="modal" onclick="approve()">Approve</button>
+                            <button type="button" class="btn btn-danger" id="btnReject" onclick="reject()">Reject</button>
+                        </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">MFG Tooling ID</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <input type="text" class="form-control" id="inputBoxMfgToolingId" name="mfgToolingId"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tooling Name</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <input type="text" class="form-control" id="inputBoxToolingName" name="toolingName"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Brand</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" id="inputBoxBrand" name="brand"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Model</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <input type="text" class="form-control" id="inputBoxModel" name="model"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Size</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" id="inputBoxSize" name="size"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Location</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <input type="text" class="form-control" id="inputBoxLocation" name="location"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <input type="text" class="form-control" id="inputBoxStatus" name="status"
-                        placeholder="Default Input">
-                    </div>
-                  </div>
-                  <div class="ln_solid"></div>
-                  <div class="form-group">
-                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                      <button type="submit" class="btn btn-success">บันทึก</button>
-                      <button type="reset" class="btn btn-primary">ล้างข้อมูล</button>
-                      <button type="button" class="btn btn-primary">ยกเลิก</button>
-                    </div>
-                  </div>
-
-                </form>
-              </div>
+                </div>
+            </div>
+              
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <!-- /page content -->
   </div>
   </div>
+
 
 
 </body>
@@ -263,5 +210,23 @@
     $('#errorMessage').fadeOut('slow');
     $('#emptyMessage').fadeOut('fast');
   }, 6000) // <-- time in milliseconds
+
+  async function approve() {
+    const response = await fetch(`/feeders/approve`, {
+      method: 'post',
+      headers: {
+          'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+          feederId: $('#inputFeeederId').val(),
+          reqStatus: $('#inputStatus').val()
+      })
+    })
+    if (response.status === 200) {
+      location.reload()
+    } else {
+      alert(response.message)
+    }
+  }
 
 </script>

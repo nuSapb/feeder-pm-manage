@@ -113,12 +113,14 @@ const findAllFeeder = async (ctx) => {
   let data = {}
   const listAllFeeder = await feeders.findAll()
   const listAllOverDue = await feeders.findOverDue()
+  const listAllOngoing = await feeders.findOngoing()
   const listAllRepair = await feeders.findRepair()
   const listAllScrap = await feeders.findScrap()
 
   data = {
     listAllFeeder: listAllFeeder,
     listAllOverDue: listAllOverDue,
+    listAllOngoing: listAllOngoing,
     listAllRepair: listAllRepair,
     listAllScrap: listAllScrap
   }
@@ -157,18 +159,38 @@ const editHandler = async (ctx) => {
 
 const manualPmHandler = async (ctx) => {
   let data = {}
-  const listAllFeeder = await feeders.findAll()
-  console.log(listAllFeeder)
+  const tableManualPM = await feeders.tableManualPM()
+  // console.log(tableManualPM)
 
   ctx.session.flash = {
     success: "edit feeder done"
   }
 
   data = {
-    listAllFeeder: listAllFeeder,
+    tableManualPM: tableManualPM,
     flash: ctx.flash
   }
   await ctx.render("manual_pm_form", data)
+}
+
+const updateDataManualPM = async (ctx) => {
+  console.log("updateDataManualPM")
+  const user = ctx.session.username
+  const updater = user
+  const { feederId, desc } = ctx.request.body
+  console.log(feederId, desc)
+  try {
+    feeders.updateManualPMFeeder(feederId, updater, desc)
+    console.log("Update manual PM data complete")
+    ctx.status = 200
+    await ctx.redirect("/manual_pm_form")
+  } catch (err) {
+    console.error(err)
+    ctx.status = 404
+    ctx.session.flash = {
+      error: "fail to update manual PM data "
+    }
+  }
 }
 
 const scrapHandler = async (ctx) => {
@@ -185,6 +207,16 @@ const scrapHandler = async (ctx) => {
     flash: ctx.flash
   }
   await ctx.render("scrap_form", data)
+}
+
+const tableWaitApprove = async (ctx) => {
+  let data = {}
+  const listAllFeeder = await feeders.findWaitApprove()
+  console.log(listAllFeeder)
+  data = {
+    listAllFeeder: listAllFeeder
+  }
+  await ctx.render("approval", data)
 }
 
 const addFeeders = async (ctx) => {
@@ -283,10 +315,10 @@ const scrapFeeders = async (ctx) => {
   console.log("scrapFeeders")
   const user = ctx.session.username
   const updater = user
-  const { feederId } = ctx.request.body
-  const status = "Scrap"
+  const { feederId, desc } = ctx.request.body
+  const status = "wait_scrap"
   try {
-    feeders.scrapFeeders(feederId, updater, status)
+    feeders.scrapFeeders(feederId, updater, status, desc)
     console.log("Update new data complete")
     ctx.status = 200
     if (ctx.status === 200) {
@@ -302,6 +334,36 @@ const scrapFeeders = async (ctx) => {
       error: "fail to scrap feeder!"
     }
     await ctx.redirect("/scrap_form")
+  }
+}
+
+const approve = async (ctx) => {
+  console.log("approve feeder")
+  const user = ctx.session.username
+  const updater = user
+  let status = ""
+  const { feederId, reqStatus } = ctx.request.body
+  console.log(reqStatus)
+  if (reqStatus === "wait_approve") {
+    status = "normal"
+  } else {
+    status = "scrap"
+  }
+  try {
+    feeders.approve(feederId, updater, status)
+    console.log("Update new data complete")
+    ctx.status = 200
+    if (ctx.status === 200) {
+      ctx.session.flash = {
+        success: "approve feeder done"
+      }
+      // await ctx.redirect("/scrap_form")
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.status = 404
+    ctx.body = err
+    // await ctx.redirect("/scrap_form")
   }
 }
 
@@ -330,5 +392,8 @@ module.exports = {
   addFeeders,
   editFeeders,
   manualPmHandler,
-  scrapFeeders
+  scrapFeeders,
+  updateDataManualPM,
+  tableWaitApprove,
+  approve
 }

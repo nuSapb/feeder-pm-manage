@@ -92,13 +92,12 @@
                       <th>size</th>
                       <th>location</th>
                       <th>status</th>
-                      <th>update_date</th>
                     </tr>
                   </thead>
 
 
                   <tbody>
-                    <% listAllFeeder.forEach((feeder) => { %>
+                    <% tableManualPM.forEach((feeder) => { %>
                     <tr>
                       <td>
                         <%- feeder.feeder_id %>
@@ -124,11 +123,6 @@
                       <td>
                         <%- feeder.status %></a>
                       </td>
-                      <td>
-                        <% let t = String(feeder.update_date).split(" ", 5);%>
-                        <%- t %></a>
-                      </td>
-
                     </tr>
                     <% }) %>
                   </tbody>
@@ -276,7 +270,7 @@
               </div>
               <div class="x_content">
                 <br />
-                <form class="form-horizontal form-label-left" id="editFeeder" method="POST" action="/edit_feeders">
+                <form class="form-horizontal form-label-left" id="editFeeder" method="POST" action="/manual_pm_feeders">
 
                   <div class="form-group">
                     <% if (flash && flash.error) { %>
@@ -361,13 +355,13 @@
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Description <span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                      <textarea class="form-control" id="textAreaValue" rows="3" placeholder="Description" ></textarea>
+                      <textarea class="form-control" id="textAreaValue" rows="3" placeholder="Description" name="desc"></textarea>
                     </div>
                   </div>
                   <div class="ln_solid"></div>
                   <div class="form-group">
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                      <button type="submit" class="btn btn-success">บันทึก</button>
+                      <button type="submit" class="btn btn-success" id="btnRec" disabled>บันทึก</button>
                       <button type="reset" class="btn btn-primary">ล้างข้อมูล</button>
                       <button type="button" class="btn btn-primary">ยกเลิก</button>
                     </div>

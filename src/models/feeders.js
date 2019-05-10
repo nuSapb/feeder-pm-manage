@@ -1,4 +1,4 @@
-const pool = require('../db')
+const pool = require("../db")
 
 const findFeeders = async () => {
   const [rows] = await pool.query(
@@ -15,19 +15,18 @@ const countFeeder = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where 1 and status <> 'Scrap'
+    where 1 and status <> 'scrap'
     `
   )
   return rows
 }
-
 
 const countDue = async () => {
   const [rows] = await pool.query(
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due'
+    where status = 'due'
     `
   )
   return rows
@@ -49,7 +48,7 @@ const countOngoing = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Ongoing'
+    where status = 'wait_approve' or status = 'wait_scrap'
     `
   )
   return rows
@@ -60,7 +59,7 @@ const countScrap = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Scrap'
+    where status = 'scrap'
     `
   )
   return rows
@@ -82,7 +81,7 @@ const count8Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due' and size = 8 
+    where status = 'due' and size = 8 
     `
   )
   return rows
@@ -93,7 +92,7 @@ const count12Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due' and size = 12
+    where status = 'due' and size = 12
     `
   )
   return rows
@@ -104,19 +103,18 @@ const count16Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due' and size = 16
+    where status = 'due' and size = 16
     `
   )
   return rows
 }
-
 
 const count24Due = async () => {
   const [rows] = await pool.query(
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due' and size = 24
+    where status = 'due' and size = 24
     `
   )
   return rows
@@ -127,7 +125,7 @@ const count32Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due' and size = 32
+    where status = 'due' and size = 32
     `
   )
   return rows
@@ -138,19 +136,18 @@ const countOtherDue = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where status = 'Due' and size > 32 
+    where status = 'due' and size > 32 
     `
   )
   return rows
 }
-
 
 const findAllDue = async () => {
   const [rows] = await pool.query(
     `
       select feeder_id,mfg_tooling_id,tooling_name,model,size,location,status
       from feeder_pm_detail
-      where status ='Due'
+      where status ='due'
       `
   )
   return rows
@@ -161,13 +158,23 @@ const findAll = async () => {
     `
     select feeder_id, mfg_tooling_id, tooling_name, brand, model, size, location, status, update_date
     from feeder_pm_detail
-    where 1 and status <> 'Scrap'
+    where 1 and status <> 'scrap'
     ORDER BY create_date DESC
     `
   )
   return rows
 }
 
+const findWaitApprove = async () => {
+  const [rows] = await pool.query(
+    `
+    select feeder_id, status, updater, update_date, detail
+    from feeder_pm_detail 
+    where status = 'wait_approve' or status = 'wait_scrap'
+    `
+  )
+  return rows
+}
 
 const findLast30Rows = async () => {
   const [rows] = await pool.query(
@@ -192,6 +199,17 @@ const findOverDue = async () => {
   return rows
 }
 
+const tableManualPM = async () => {
+  const [rows] = await pool.query(
+    `
+    select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
+    from feeder_pm_detail
+    where status = 'overdue' or status = 'due'
+    `
+  )
+  return rows
+}
+
 const findRepair = async () => {
   const [rows] = await pool.query(
     `
@@ -203,18 +221,41 @@ const findRepair = async () => {
   return rows
 }
 
-const findScrap = async () => {
+const findOngoing = async () => {
   const [rows] = await pool.query(
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where status = 'Scrap'
+    where status = 'wait_approve' or status = 'wait_scrap'
     `
   )
   return rows
 }
 
-const addFeeders = async (feederId, mfgToolingId, toolingName, model, brand, size, location, status, pm_group, creater, updater) => {
+const findScrap = async () => {
+  const [rows] = await pool.query(
+    `
+    select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
+    from feeder_pm_detail
+    where status = 'scrap'
+    `
+  )
+  return rows
+}
+
+const addFeeders = async (
+  feederId,
+  mfgToolingId,
+  toolingName,
+  model,
+  brand,
+  size,
+  location,
+  status,
+  pm_group,
+  creater,
+  updater
+) => {
   let [rows] = await pool.query(
     `
     INSERT INTO feeder_pm_detail (feeder_id, mfg_tooling_id, tooling_name,
@@ -225,34 +266,84 @@ const addFeeders = async (feederId, mfgToolingId, toolingName, model, brand, siz
            ?, ?, ?, ?,
            ?, ?, ?, now(), 
            ?, now())`,
-    [feederId, mfgToolingId, toolingName, model, brand, size, location, status, pm_group, creater, updater]
-
+    [
+      feederId,
+      mfgToolingId,
+      toolingName,
+      model,
+      brand,
+      size,
+      location,
+      status,
+      pm_group,
+      creater,
+      updater
+    ]
   )
 }
 
-const updateFeeders = async (feederId, mfgToolingId, toolingName, brand, model, size, location, updater) => {
+const updateFeeders = async (
+  feederId,
+  mfgToolingId,
+  toolingName,
+  brand,
+  model,
+  size,
+  location,
+  updater
+) => {
   let [rows] = await pool.query(
     `
     UPDATE feeder_pm_detail
     SET feeder_id = ?, mfg_tooling_id = ?, tooling_name = ?,
          model = ?,brand = ?, size = ?, location = ?, 
          updater = ?, update_date = now()
-    WHERE feeder_id = ?`, [feederId, mfgToolingId, toolingName, brand, model, size, location, updater, feederId]
-
+    WHERE feeder_id = ?`,
+    [
+      feederId,
+      mfgToolingId,
+      toolingName,
+      brand,
+      model,
+      size,
+      location,
+      updater,
+      feederId
+    ]
   )
 }
 
-const scrapFeeders = async (feederId, updater, status) => {
+const updateManualPMFeeder = async (feederId, updater, desc) => {
   let [rows] = await pool.query(
     `
     UPDATE feeder_pm_detail
-    SET status = ?, updater = ?, update_date = now()
-    WHERE feeder_id = ?`, [status, updater, feederId]
-
+    SET status = "wait_approve", updater = ?, 
+    update_date = now(), detail = ?
+    WHERE feeder_id = ?`,
+    [updater, desc, feederId]
   )
 }
 
+const approve = async (feederId, updater, status) => {
+  let [rows] = await pool.query(
+    `
+    UPDATE feeder_pm_detail
+    SET status = ?, updater = ?, 
+    update_date = now()
+    WHERE feeder_id = ?`,
+    [status, updater, feederId]
+  )
+}
 
+const scrapFeeders = async (feederId, updater, status, desc) => {
+  let [rows] = await pool.query(
+    `
+    UPDATE feeder_pm_detail
+    SET status = ?, updater = ?, update_date = now(), detail = ?
+    WHERE feeder_id = ?`,
+    [status, updater, desc, feederId]
+  )
+}
 
 module.exports = {
   findFeeders,
@@ -272,9 +363,14 @@ module.exports = {
   findAllDue,
   findOverDue,
   findRepair,
+  findOngoing,
   findScrap,
   findLast30Rows,
   addFeeders,
   updateFeeders,
-  scrapFeeders
+  scrapFeeders,
+  tableManualPM,
+  updateManualPMFeeder,
+  findWaitApprove,
+  approve
 }
