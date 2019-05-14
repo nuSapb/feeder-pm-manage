@@ -6,6 +6,7 @@ const feeders = require("../../../models/feeders")
 
 const config = require("../../../config")
 const users = require("../../../models/user")
+const pm = require("../../../models/pm")
 
 const getHandler = async (ctx) => {
   console.log(ctx.session.username)
@@ -48,7 +49,7 @@ const getHandler = async (ctx) => {
   await ctx.render("index", data)
 }
 
-const getData = async (ctx) => {
+const onhandHandler = async (ctx) => {
   console.log(ctx.session.username)
   let data = {}
   let user = ctx.session.username
@@ -67,6 +68,15 @@ const getData = async (ctx) => {
   const size24Due = await feeders.count24Due()
   const size32Due = await feeders.count32Due()
   const otherSizeDue = await feeders.countOtherDue()
+  const size8NXT = await feeders.count8NXT()
+  const size12NXT = await feeders.count12NXT()
+  const size16NXT = await feeders.count16NXT()
+  const size18NXT = await feeders.count18NXT()
+  const size24NXT = await feeders.count24NXT()
+  const size32NXT = await feeders.count32NXT()
+  const size48NXT = await feeders.count48NXT()
+  const size56NXT = await feeders.count56NXT()
+  const size68NXT = await feeders.count68NXT()
 
   data = {
     info: result,
@@ -76,6 +86,59 @@ const getData = async (ctx) => {
     overDue: overDue,
     onGoing,
     onGoing,
+    scrap: scrap,
+    repair: repair,
+    size8Due: size8Due,
+    size12Due: size12Due,
+    size16Due: size16Due,
+    size24Due: size24Due,
+    size32Due: size32Due,
+    otherSizeDue: otherSizeDue,
+    size8NXT: size8NXT,
+    size12NXT: size12NXT,
+    size16NXT: size16NXT,
+    size18NXT: size18NXT,
+    size24NXT: size24NXT,
+    size32NXT: size32NXT,
+    size48NXT: size48NXT,
+    size56NXT: size56NXT,
+    size68NXT: size68NXT
+  }
+
+  await ctx.render("onhand", data)
+}
+
+const getData = async (ctx) => {
+  console.log(ctx.session.username)
+  let data = {}
+  let user = ctx.session.username
+  console.log(user)
+  const userDetail = await users.findUserByUsername(user)
+  const allFeeder = await feeders.countFeeder()
+  const asmTotal = await feeders.countASM()
+  const nxtTotal = await feeders.countNXT()
+  const result = await feeders.findFeeders()
+  const due = await feeders.countDue()
+  const overDue = await feeders.countOverDue()
+  const onGoing = await feeders.countOngoing()
+  const scrap = await feeders.countScrap()
+  const repair = await feeders.countRepair()
+  const size8Due = await feeders.count8Due()
+  const size12Due = await feeders.count12Due()
+  const size16Due = await feeders.count16Due()
+  const size24Due = await feeders.count24Due()
+  const size32Due = await feeders.count32Due()
+  const otherSizeDue = await feeders.countOtherDue()
+
+  data = {
+    info: result,
+    userDetail: userDetail,
+    allFeeder: allFeeder,
+    asm: asmTotal,
+    nxt: nxtTotal,
+    due: due,
+    overDue: overDue,
+    onGoing: onGoing,
     scrap: scrap,
     repair: repair,
     size8Due: size8Due,
@@ -141,6 +204,18 @@ const findlastTenRows = async (ctx) => {
   await ctx.render("form", data)
 }
 
+const findHistory = async (ctx) => {
+  let data = {}
+  const feederId = ctx.params.feederId
+  const history = await feeders.findHistory(feederId)
+  console.log(feederId)
+  data = {
+    history: history
+  }
+  ctx.status = 200
+  ctx.body = JSON.stringify(data)
+}
+
 const editHandler = async (ctx) => {
   let data = {}
   const listAllFeeder = await feeders.findAll()
@@ -179,8 +254,10 @@ const updateDataManualPM = async (ctx) => {
   const updater = user
   const { feederId, desc } = ctx.request.body
   console.log(feederId, desc)
+  const pmType = "manual"
   try {
-    feeders.updateManualPMFeeder(feederId, updater, desc)
+    await feeders.updateManualPMFeeder(feederId, updater, desc)
+    await pm.insertHistory(feederId, pmType, user)
     console.log("Update manual PM data complete")
     ctx.status = 200
     await ctx.redirect("/manual_pm_form")
@@ -383,7 +460,9 @@ const assignpmGroup = (group) => {
 
 module.exports = {
   getHandler,
+  onhandHandler,
   getData,
+  findHistory,
   listAllFeederDue,
   findAllFeeder,
   findlastTenRows,

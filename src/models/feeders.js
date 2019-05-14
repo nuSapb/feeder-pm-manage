@@ -15,7 +15,29 @@ const countFeeder = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where 1 and status <> 'scrap'
+    where status <> 'scrap'
+    `
+  )
+  return rows
+}
+
+const countASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap'
+    `
+  )
+  return rows
+}
+
+const countNXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap'
     `
   )
   return rows
@@ -142,6 +164,105 @@ const countOtherDue = async () => {
   return rows
 }
 
+const count8NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 8
+    `
+  )
+  return rows
+}
+
+const count12NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 12
+    `
+  )
+  return rows
+}
+
+const count16NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 16
+    `
+  )
+  return rows
+}
+
+const count18NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 18
+    `
+  )
+  return rows
+}
+
+const count24NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 24
+    `
+  )
+  return rows
+}
+
+const count32NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 32
+    `
+  )
+  return rows
+}
+
+const count48NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 48
+    `
+  )
+  return rows
+}
+
+const count56NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 56
+    `
+  )
+  return rows
+}
+
+const count68NXT = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'NXT' and status <> 'scrap' and size = 68
+    `
+  )
+  return rows
+}
+
 const findAllDue = async () => {
   const [rows] = await pool.query(
     `
@@ -235,10 +356,21 @@ const findOngoing = async () => {
 const findScrap = async () => {
   const [rows] = await pool.query(
     `
-    select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
+    select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status, detail
     from feeder_pm_detail
     where status = 'scrap'
     `
+  )
+  return rows
+}
+
+const findHistory = async (feederId) => {
+  let [rows] = await pool.query(
+    `
+    select feeder_id,pm_type,pm_by,pm_date
+    from feeder_pm_history
+    where feeder_id = ?`,
+    [feederId]
   )
   return rows
 }
@@ -348,6 +480,8 @@ const scrapFeeders = async (feederId, updater, status, desc) => {
 module.exports = {
   findFeeders,
   countFeeder,
+  countASM,
+  countNXT,
   countDue,
   countOverDue,
   countOngoing,
@@ -360,6 +494,7 @@ module.exports = {
   count32Due,
   countOtherDue,
   findAll,
+  findHistory,
   findAllDue,
   findOverDue,
   findRepair,
@@ -372,5 +507,14 @@ module.exports = {
   tableManualPM,
   updateManualPMFeeder,
   findWaitApprove,
-  approve
+  approve,
+  count8NXT,
+  count12NXT,
+  count16NXT,
+  count18NXT,
+  count24NXT,
+  count32NXT,
+  count48NXT,
+  count56NXT,
+  count68NXT
 }

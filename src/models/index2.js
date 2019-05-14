@@ -1,4 +1,4 @@
-const pool = require('../db')
+const pool = require("../db")
 
 const findFeeders = async () => {
   const [rows] = await pool.query(
@@ -16,22 +16,21 @@ const countFeeder = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM'
+    where brand = 'ASM' and status <> 'scrap'
     `
-    )
-    return rows
+  )
+  return rows
 }
-
 
 const countDue = async () => {
   const [rows] = await pool.query(
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due'
+    where brand = 'ASM' and status = 'due'
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const countOverDue = async () => {
@@ -39,10 +38,10 @@ const countOverDue = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Over'
+    where brand = 'ASM' and status = 'overdue'
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const countOngoing = async () => {
@@ -50,10 +49,10 @@ const countOngoing = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Ongoing'
+    where brand = 'ASM' and status = 'ongoing'
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const countScrap = async () => {
@@ -61,10 +60,10 @@ const countScrap = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Scrap'
+    where brand = 'ASM' and status = 'scrap'
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const countRepair = async () => {
@@ -74,8 +73,8 @@ const countRepair = async () => {
     from feeder_pm_detail
     where brand = 'ASM' and status = 'repair'
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const count8Due = async () => {
@@ -83,10 +82,10 @@ const count8Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due' and size = 8 
+    where brand = 'ASM' and status = 'due' and size = 8 
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const count12Due = async () => {
@@ -94,10 +93,10 @@ const count12Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due' and size = 12
+    where brand = 'ASM' and status = 'due' and size = 12
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const count16Due = async () => {
@@ -105,22 +104,21 @@ const count16Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due' and size = 16
+    where brand = 'ASM' and status = 'due' and size = 16
     `
-    )
-    return rows
+  )
+  return rows
 }
-
 
 const count24Due = async () => {
   const [rows] = await pool.query(
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due' and size = 24
+    where brand = 'ASM' and status = 'due' and size = 24
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const count32Due = async () => {
@@ -128,10 +126,10 @@ const count32Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due' and size = 32
+    where brand = 'ASM' and status = 'due' and size = 32
     `
-    )
-    return rows
+  )
+  return rows
 }
 
 const countOtherDue = async () => {
@@ -139,34 +137,33 @@ const countOtherDue = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Due' and size > 32 
+    where brand = 'ASM' and status = 'due' and size > 32 
     `
-    )
-    return rows
+  )
+  return rows
 }
 
-
 const findAllDue = async () => {
-    const [rows] = await pool.query(
-      `
+  const [rows] = await pool.query(
+    `
       select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
       from feeder_pm_detail
-      where brand = 'ASM' and status ='Due'
+      where brand = 'ASM' and status ='due'
       `
-    )
-    return rows
-} 
+  )
+  return rows
+}
 
 const findAll = async () => {
   const [rows] = await pool.query(
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where brand = 'ASM' and
+    where brand = 'ASM' and status <> 'scrap'
     `
   )
   return rows
-} 
+}
 
 const findOverDue = async () => {
   const [rows] = await pool.query(
@@ -177,7 +174,7 @@ const findOverDue = async () => {
     `
   )
   return rows
-} 
+}
 
 const findRepair = async () => {
   const [rows] = await pool.query(
@@ -188,20 +185,18 @@ const findRepair = async () => {
     `
   )
   return rows
-} 
+}
 
 const findScrap = async () => {
   const [rows] = await pool.query(
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where brand = 'ASM' and status = 'Scrap'
+    where brand = 'ASM' and status = 'scrap'
     `
   )
   return rows
-} 
-
-
+}
 
 module.exports = {
   findFeeders,
@@ -221,5 +216,5 @@ module.exports = {
   findAllDue,
   findOverDue,
   findRepair,
-  findScrap,
+  findScrap
 }

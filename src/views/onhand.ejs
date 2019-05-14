@@ -1,0 +1,734 @@
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index" class="site_title"><i class="fa fa-cogs"></i> <span>FEEDER PM</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <% include menu_profile %>
+
+          <!-- /menu profile quick info -->
+
+          <br />
+
+          <!-- sidebar menu -->
+          <% include sidebar %>
+          <!-- /sidebar menu -->
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Lock">
+              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+      <!-- top navigation -->
+      <% include top_navigation %>
+      <!-- /top navigation -->
+
+      <!-- page content -->
+      <div class="right_col" role="main">
+
+        <!-- top tiles -->
+        <div class="row tile_count">
+          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-sliders"></i> Total On hand Feeders</span>
+            <div class="count">
+              <a href="/tables"><%= allFeeder[0].count %></a>
+            </div>
+            <!-- <span class="count_bottom"><i class="green">+4 units </i> From last Week</span> -->
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-clock-o"></i> PM Due in this month</span>
+            <div class="count yellow">
+              <a href="/tables_dynamic" style="color:#EAC435"><%= due[0].count %></a>
+            </div>
+            <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-clock-o"></i> Over Due</span>
+            <div class="count red">
+              <a href="/tables" style="color:#FB3640"><%= overDue[0].count %></a>
+            </div>
+            <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-spinner"></i> Ongoing </span>
+            <div class="count"><a href="/tables" style="color:#2A3F54"><%= onGoing[0].count %></a></div>
+            <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> -->
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-wrench"></i> Waiting Repair </span>
+            <div class="count"><a href="/tables" style="color:#A9BCD0"><%= repair[0].count %></a></div>
+            <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-times"></i> Scrap </span>
+            <div class="count"><a href="/tables" style="color:#A9BCD0"><%= scrap[0].count %></a></div>
+            <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+          </div>
+        </div>
+        <!-- /top tiles -->
+
+        <div class="clearfix"></div>
+        <div class="row">
+          <!-- pie chart -->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Percentage per brand<small>Overall</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                        class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Settings 1</a>
+                      </li>
+                      <li><a href="#">Settings 2</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content2">
+                <div id="graph_donut2" style="width:100%; height:250px;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- /Pie chart -->
+
+          <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Totally per brand <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="onhandChart"></canvas>
+                  </div>
+                </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>NXT Feeder<small>separate by size.</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                          class="fa fa-wrench"></i></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                  <div id="nxtPie" style="height:350px;"></div>
+
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>ASM Feeder<small>separate by size.</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                          class="fa fa-wrench"></i></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                  <div id="asmPie" style="height:350px;"></div>
+
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+
+        <!-- end of weather widget -->
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- /page content -->
+
+  <!-- footer content -->
+  <% include footer %>
+  <!-- /footer content -->
+  </div>
+  </div>
+
+  <script src="/-/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/-/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="/-/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="/-/vendors/nprogress/nprogress.js"></script>
+  <!-- morris.js -->
+  <script src="/-/vendors/raphael/raphael.min.js"></script>
+  <script src="/-/vendors/morris.js/morris.min.js"></script>
+  <script src="/-/vendors/echarts/dist/echarts.min.js"></script>
+  <script src="/-/vendors/echarts/map/js/world.js"></script>
+
+
+  <script>
+    async function init_onhand_charts() {
+      let response = await fetch(`/feederdata`)
+      let data = await response.json()
+      console.log(data)
+      let scrap = data.scrap[0].count
+      let allFeeder = data.allFeeder[0].count + scrap
+      console.log("allFeeder = " + allFeeder)
+      let due = data.due[0].count
+      console.log("due = " + due)
+      let overDue = data.overDue[0].count
+      console.log("overDue = " + overDue)
+      let pDue = ((due * 100) / allFeeder).toFixed(2)
+      console.log("pDue = " + pDue)
+      let pOverDue = ((overDue * 100) / allFeeder).toFixed(2)
+      let pScrap = ((scrap * 100) / allFeeder).toFixed(2)
+
+      let pNormal = (100 - pDue - pOverDue).toFixed(2)
+
+      let asm = data.asm[0].count
+      let nxt = data.nxt[0].count
+
+      let pASM = (asm * 100) / allFeeder
+      let pNXT = (100 - pASM)
+
+      if (typeof (Morris) === 'undefined') { return; }
+      console.log('init_morris_charts');
+
+      if ($('#graph_donut2').length) {
+
+        Morris.Donut({
+          element: 'graph_donut2',
+          data: [
+            { label: 'ASM', value: pASM.toFixed(2) },
+            { label: 'NXT', value: pNXT.toFixed(2) },
+          ],
+          colors: ['#16C172', '#FCAB10'],
+          formatter: function (y) {
+            return y + "%";
+          },
+          resize: true
+        });
+
+      }
+
+      if ($("#onhandChart").length) {
+        var ctx = document.getElementById("onhandChart")
+        var onhandChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: [
+              "NXT",
+              "ASM",
+            ],
+            datasets: [
+              {
+                label: "total",
+                backgroundColor: ["#FCAB10", "#26B99A" ],
+                data: [nxt,asm]
+              }
+            ]
+          },
+
+          options: {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }
+              ]
+            }
+          }
+        })
+      }
+
+      if (typeof echarts === "undefined") {
+        return
+      }
+      console.log("init_echarts")
+
+      let theme = {
+        color: [
+          "#26B99A",
+          "#34495E",
+          "#BDC3C7",
+          "#3498DB",
+          "#9B59B6",
+          "#8abb6f",
+          "#759c6a",
+          "#bfd3b7"
+        ],
+
+        title: {
+          itemGap: 8,
+          textStyle: {
+            fontWeight: "normal",
+            color: "#408829"
+          }
+        },
+
+        dataRange: {
+          color: ["#1f610a", "#97b58d"]
+        },
+
+        toolbox: {
+          color: ["#408829", "#408829", "#408829", "#408829"]
+        },
+
+        tooltip: {
+          backgroundColor: "rgba(0,0,0,0.5)",
+          axisPointer: {
+            type: "line",
+            lineStyle: {
+              color: "#408829",
+              type: "dashed"
+            },
+            crossStyle: {
+              color: "#408829"
+            },
+            shadowStyle: {
+              color: "rgba(200,200,200,0.3)"
+            }
+          }
+        },
+
+        dataZoom: {
+          dataBackgroundColor: "#eee",
+          fillerColor: "rgba(64,136,41,0.2)",
+          handleColor: "#408829"
+        },
+        grid: {
+          borderWidth: 0
+        },
+
+        categoryAxis: {
+          axisLine: {
+            lineStyle: {
+              color: "#408829"
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: ["#eee"]
+            }
+          }
+        },
+
+        valueAxis: {
+          axisLine: {
+            lineStyle: {
+              color: "#408829"
+            }
+          },
+          splitArea: {
+            show: true,
+            areaStyle: {
+              color: ["rgba(250,250,250,0.1)", "rgba(200,200,200,0.1)"]
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: ["#eee"]
+            }
+          }
+        },
+        timeline: {
+          lineStyle: {
+            color: "#408829"
+          },
+          controlStyle: {
+            normal: { color: "#408829" },
+            emphasis: { color: "#408829" }
+          }
+        },
+
+        k: {
+          itemStyle: {
+            normal: {
+              color: "#68a54a",
+              color0: "#a9cba2",
+              lineStyle: {
+                width: 1,
+                color: "#408829",
+                color0: "#86b379"
+              }
+            }
+          }
+        },
+        map: {
+          itemStyle: {
+            normal: {
+              areaStyle: {
+                color: "#ddd"
+              },
+              label: {
+                textStyle: {
+                  color: "#c12e34"
+                }
+              }
+            },
+            emphasis: {
+              areaStyle: {
+                color: "#99d2dd"
+              },
+              label: {
+                textStyle: {
+                  color: "#c12e34"
+                }
+              }
+            }
+          }
+        },
+        force: {
+          itemStyle: {
+            normal: {
+              linkStyle: {
+                strokeColor: "#408829"
+              }
+            }
+          }
+        },
+        chord: {
+          padding: 4,
+          itemStyle: {
+            normal: {
+              lineStyle: {
+                width: 1,
+                color: "rgba(128, 128, 128, 0.5)"
+              },
+              chordStyle: {
+                lineStyle: {
+                  width: 1,
+                  color: "rgba(128, 128, 128, 0.5)"
+                }
+              }
+            },
+            emphasis: {
+              lineStyle: {
+                width: 1,
+                color: "rgba(128, 128, 128, 0.5)"
+              },
+              chordStyle: {
+                lineStyle: {
+                  width: 1,
+                  color: "rgba(128, 128, 128, 0.5)"
+                }
+              }
+            }
+          }
+        },
+        gauge: {
+          startAngle: 225,
+          endAngle: -45,
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: [[0.2, "#86b379"], [0.8, "#68a54a"], [1, "#408829"]],
+              width: 8
+            }
+          },
+          axisTick: {
+            splitNumber: 10,
+            length: 12,
+            lineStyle: {
+              color: "auto"
+            }
+          },
+          axisLabel: {
+            textStyle: {
+              color: "auto"
+            }
+          },
+          splitLine: {
+            length: 18,
+            lineStyle: {
+              color: "auto"
+            }
+          },
+          pointer: {
+            length: "90%",
+            color: "auto"
+          },
+          title: {
+            textStyle: {
+              color: "#333"
+            }
+          },
+          detail: {
+            textStyle: {
+              color: "auto"
+            }
+          }
+        },
+        textStyle: {
+          fontFamily: "Arial, Verdana, sans-serif"
+        }
+      }
+
+
+      if ($("#asmPie").length) {
+        var echartPieCollapse = echarts.init(document.getElementById("asmPie"),theme)
+
+        echartPieCollapse.setOption({
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          legend: {
+            x: "center",
+            y: "bottom",
+            data: ["8mm.", "12mm.", "16mm.", "18mm.", "24mm.", "32mm.", "48mm.", "56mm.", "64mm."]
+          },
+          toolbox: {
+            show: true,
+            feature: {
+              magicType: {
+                show: true,
+                type: ["pie", "funnel"]
+              },
+              restore: {
+                show: true,
+                title: "Restore"
+              },
+              saveAsImage: {
+                show: true,
+                title: "Save Image"
+              }
+            }
+          },
+          calculable: true,
+          series: [
+            {
+              name: "Feeder size",
+              type: "pie",
+              radius: [25, 90],
+              center: ["50%", 170],
+              roseType: "area",
+              x: "50%",
+              max: 40,
+              sort: "ascending",
+              data: [
+                {
+                  value: 10,
+                  name: "8mm."
+                },
+                {
+                  value: 5,
+                  name: "12mm."
+                },
+                {
+                  value: 15,
+                  name: "16mm."
+                },
+                {
+                  value: 25,
+                  name: "18mm."
+                },
+                {
+                  value: 20,
+                  name: "24mm."
+                },
+                {
+                  value: 35,
+                  name: "32mm."
+                }
+                ,
+                {
+                  value: 35,
+                  name: "48mm."
+                }
+                ,
+                {
+                  value: 35,
+                  name: "56mm."
+                }
+                ,
+                {
+                  value: 35,
+                  name: "68mm."
+                }
+              ]
+            }
+          ]
+        })  
+      }
+
+      if ($("#nxtPie").length) {
+        const nxt8 = <%= size8NXT[0].count %>
+        const nxt12 = <%= size12NXT[0].count %>
+        const nxt16 = <%= size16NXT[0].count %>
+        const nxt18 = <%= size18NXT[0].count %>
+        const nxt24 = <%= size24NXT[0].count %>
+        const nxt32 = <%= size32NXT[0].count %>
+        const nxt48 = <%= size48NXT[0].count %>
+        const nxt56 = <%= size56NXT[0].count %>
+        const nxt68 = <%= size68NXT[0].count %>
+
+        var echartPieCollapse = echarts.init(document.getElementById("nxtPie"),theme)
+
+        echartPieCollapse.setOption({
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          legend: {
+            x: "center",
+            y: "bottom",
+            data: ["8mm.", "12mm.", "16mm.", "18mm.", "24mm.", "32mm.", "48mm.", "56mm.", "64mm."]
+          },
+          toolbox: {
+            show: true,
+            feature: {
+              magicType: {
+                show: true,
+                type: ["pie", "funnel"]
+              },
+              restore: {
+                show: true,
+                title: "Restore"
+              },
+              saveAsImage: {
+                show: true,
+                title: "Save Image"
+              }
+            }
+          },
+          calculable: true,
+          series: [
+            {
+              name: "Feeder size",
+              type: "pie",
+              radius: [25, 90],
+              center: ["50%", 170],
+              roseType: "area",
+              x: "50%",
+              max: 40,
+              sort: "ascending",
+              data: [
+                {
+                  value: nxt8,
+                  name: "8mm."
+                },
+                {
+                  value: nxt12,
+                  name: "12mm."
+                },
+                {
+                  value: nxt16,
+                  name: "16mm."
+                },
+                {
+                  value: nxt18,
+                  name: "18mm."
+                },
+                {
+                  value: nxt24,
+                  name: "24mm."
+                },
+                {
+                  value: nxt32,
+                  name: "32mm."
+                }
+                ,
+                {
+                  value: nxt48,
+                  name: "48mm."
+                }
+                ,
+                {
+                  value: nxt56,
+                  name: "56mm."
+                }
+                ,
+                {
+                  value: nxt68,
+                  name: "68mm."
+                }
+              ]
+            }
+          ]
+        })  
+      }
+
+    }
+
+
+    $(document).ready(() => {
+      init_onhand_charts()
+      console.log('onhand chart work')
+    })
+  </script>
+</body>

@@ -3193,6 +3193,49 @@ setApproveDetails = (data) => {
   $("#inputDetail").val(data[4])
 }
 
+sethistoryDetail = (data) => {
+  $("#datatable-history").html("")
+  if (data) {
+    let thName = ""
+    let tableHeader = ""
+    let tableRow = ""
+
+    let myData = data.history
+
+    console.log("data")
+    console.log(myData)
+    // alert(myData.length)
+    if (Object.entries(myData).length !== 0) {
+      for (let i = 0; i < myData.length; i++) {
+        thName = ""
+        for (let key in myData[i]) {
+          thName += "<th>" + key + "</th>"
+          // alert(key)
+        }
+      }
+      tableHeader = "<tr>" + thName + "</tr>"
+      console.log(tableHeader)
+      $("#datatable-history").append($(tableHeader))
+
+      for (let i = 0; i < myData.length; i++) {
+        const keyChecker = "company"
+        let tdValue = ""
+        for (let key in myData[i]) {
+          value = myData[i][key]
+          if (key != keyChecker) {
+            tdValue += "<td>" + value + "</td>"
+          }
+        }
+        tableRow = "<tr>" + tdValue + "</tr>"
+        $("#datatable-history").append($(tableRow))
+      }
+      $("#historyModal").modal("show")
+    } else {
+      alert("No history data")
+    }
+  }
+}
+
 function init_DataTables() {
   console.log("run_datatables")
 
@@ -3422,6 +3465,101 @@ function init_DataTables_approve() {
       if (data) {
         setApproveDetails(data)
         $("#ModalDetail").modal("show")
+      }
+    })
+  }
+
+  TableManageButtons = (function() {
+    "use strict"
+    return {
+      init: function() {
+        handleDataTableButtons()
+      }
+    }
+  })()
+
+  $("#datatable").dataTable()
+
+  $("#datatable-keytable").DataTable({
+    keys: true
+  })
+
+  $("#datatable-responsive").DataTable()
+
+  $("#datatable-scroller").DataTable({
+    ajax: "js/datatables/json/scroller-demo.json",
+    deferRender: true,
+    scrollY: 380,
+    scrollCollapse: true,
+    scroller: true
+  })
+
+  $("#datatable-fixed-header").DataTable({
+    fixedHeader: true
+  })
+
+  var $datatable = $("#datatable-checkbox")
+
+  $datatable.dataTable({
+    order: [[1, "asc"]],
+    columnDefs: [{ orderable: false, targets: [0] }]
+  })
+  $datatable.on("draw.dt", function() {
+    $("checkbox input").iCheck({
+      checkboxClass: "icheckbox_flat-green"
+    })
+  })
+
+  TableManageButtons.init()
+}
+
+function init_DataTables_feeders() {
+  console.log("run_datatables")
+
+  if (typeof $.fn.DataTable === "undefined") {
+    return
+  }
+  console.log("init_DataTables")
+
+  var handleDataTableButtons = function() {
+    if ($("#datatable-feeders").length) {
+      $("#datatable-feeders").DataTable({
+        dom: "Blfrtip",
+        buttons: [
+          {
+            extend: "copy",
+            className: "btn-sm"
+          },
+          {
+            extend: "csv",
+            className: "btn-sm"
+          },
+          {
+            extend: "excel",
+            className: "btn-sm"
+          },
+          {
+            extend: "pdfHtml5",
+            className: "btn-sm"
+          },
+          {
+            extend: "print",
+            className: "btn-sm"
+          }
+        ],
+        responsive: true
+      })
+    }
+
+    //TODO: init form data from datatable #datatable-buttons
+    let table = $("#datatable-feeders").DataTable()
+    $("#datatable-feeders tbody").on("click", "tr", async function() {
+      let tblData = table.row(this).data()
+      console.log(tblData[0])
+      if (tblData) {
+        let response = await fetch(`/history/${tblData[0]}`)
+        let data = await response.json()
+        sethistoryDetail(data)
       }
     })
   }
@@ -6296,6 +6434,7 @@ $(document).ready(function() {
   init_DataTables()
   init_DataTables_scrap()
   init_DataTables_approve()
+  init_DataTables_feeders()
   init_chart_doughnut()
   init_gauge()
   init_PNotify()

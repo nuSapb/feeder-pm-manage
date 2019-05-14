@@ -30,6 +30,7 @@ const userRole = async (ctx, next) => {
 }
 
 router.get("/index", checkAuth, feeders.getHandler)
+router.get("/onhand", checkAuth, feeders.onhandHandler)
 
 router.get("/index2", checkAuth, index2.getHandler)
 
@@ -47,9 +48,10 @@ router.get("/manual_pm_form", checkAuth, feeders.manualPmHandler)
 router.get("/scrap_form", checkAuth, feeders.scrapHandler)
 router.post("/insert_feeders", checkAuth, feeders.addFeeders)
 router.post("/edit_feeders", checkAuth, feeders.editFeeders)
+router.get("/history/:feederId", feeders.findHistory)
 router.post("/scrap_feeders", checkAuth, feeders.scrapFeeders)
 router.post("/manual_pm_feeders", checkAuth, feeders.updateDataManualPM)
-router.get("/tables", checkAuth, feeders.findAllFeeder)
+router.get("/tables", feeders.findAllFeeder)
 router.get("/tables_dynamic", checkAuth, feeders.listAllFeederDue)
 router.post("/testapi", testapi.log)
 router.post("/update_pm", checkAuth, pm.postHandler)

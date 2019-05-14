@@ -4,20 +4,31 @@ const findFeeders = async () => {
   const [rows] = await pool.query(
     `select feeder_id, mfg_tooling_id, tooling_name, model, pm_group, location, status
      from feeder_pm_detail
-       where brand = 'NXT' and status <> 'scrap'
+       where brand = 'ASM'
        `
   )
 
   return rows
 }
 
-const countFeeder = async () => {
+const countASM = async () => {
   const [rows] = await pool.query(
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status <> 'scrap'
+    where brand = 'ASM' 
     `
+  )
+  return rows
+}
+
+const countNXT = async () => {
+  const [rows] = await pool.query(
+    `
+      select count(feeder_id) as count
+      from feeder_pm_detail
+      where brand = 'NXT' 
+      `
   )
   return rows
 }
@@ -27,7 +38,7 @@ const countDue = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due'
+    where brand = 'ASM' and status = 'Due'
     `
   )
   return rows
@@ -38,7 +49,7 @@ const countOverDue = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'overdue'
+    where brand = 'ASM' and status = 'Over'
     `
   )
   return rows
@@ -49,7 +60,7 @@ const countOngoing = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'ongoing'
+    where brand = 'ASM' and status = 'Ongoing'
     `
   )
   return rows
@@ -60,7 +71,7 @@ const countScrap = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'scrap'
+    where brand = 'ASM' and status = 'Scrap'
     `
   )
   return rows
@@ -71,7 +82,7 @@ const countRepair = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'repair'
+    where brand = 'ASM' and status = 'repair'
     `
   )
   return rows
@@ -82,7 +93,7 @@ const count8Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due' and size = 8 
+    where brand = 'ASM' and status = 'Due' and size = 8 
     `
   )
   return rows
@@ -93,7 +104,7 @@ const count12Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due' and size = 12
+    where brand = 'ASM' and status = 'Due' and size = 12
     `
   )
   return rows
@@ -104,7 +115,7 @@ const count16Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due' and size = 16
+    where brand = 'ASM' and status = 'Due' and size = 16
     `
   )
   return rows
@@ -115,7 +126,7 @@ const count24Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due' and size = 24
+    where brand = 'ASM' and status = 'Due' and size = 24
     `
   )
   return rows
@@ -126,7 +137,7 @@ const count32Due = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due' and size = 32
+    where brand = 'ASM' and status = 'Due' and size = 32
     `
   )
   return rows
@@ -137,7 +148,7 @@ const countOtherDue = async () => {
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'due' and size > 32 
+    where brand = 'ASM' and status = 'Due' and size > 32 
     `
   )
   return rows
@@ -148,7 +159,7 @@ const findAllDue = async () => {
     `
       select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
       from feeder_pm_detail
-      where brand = 'NXT' and status ='due'
+      where brand = 'ASM' and status ='Due'
       `
   )
   return rows
@@ -159,7 +170,7 @@ const findAll = async () => {
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where brand = 'NXT' and status <> 'scrap'
+    where brand = 'ASM' and
     `
   )
   return rows
@@ -170,7 +181,7 @@ const findOverDue = async () => {
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'overdue'
+    where brand = 'ASM' and status = 'overdue'
     `
   )
   return rows
@@ -181,7 +192,7 @@ const findRepair = async () => {
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'repair'
+    where brand = 'ASM' and status = 'repair'
     `
   )
   return rows
@@ -192,7 +203,7 @@ const findScrap = async () => {
     `
     select feeder_id,mfg_tooling_id,tooling_name,model,brand,size,location,status
     from feeder_pm_detail
-    where brand = 'NXT' and status = 'Scrap'
+    where brand = 'ASM' and status = 'Scrap'
     `
   )
   return rows
@@ -200,7 +211,8 @@ const findScrap = async () => {
 
 module.exports = {
   findFeeders,
-  countFeeder,
+  countASM,
+  countNXT,
   countDue,
   countOverDue,
   countOngoing,
