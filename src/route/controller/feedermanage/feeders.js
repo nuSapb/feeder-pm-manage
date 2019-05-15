@@ -74,9 +74,18 @@ const onhandHandler = async (ctx) => {
   const size18NXT = await feeders.count18NXT()
   const size24NXT = await feeders.count24NXT()
   const size32NXT = await feeders.count32NXT()
-  const size48NXT = await feeders.count48NXT()
+  const size44NXT = await feeders.count44NXT()
   const size56NXT = await feeders.count56NXT()
   const size68NXT = await feeders.count68NXT()
+  const size8ASM = await feeders.count8ASM()
+  const size12ASM = await feeders.count12ASM()
+  const size16ASM = await feeders.count16ASM()
+  const size18ASM = await feeders.count18ASM()
+  const size24ASM = await feeders.count24ASM()
+  const size32ASM = await feeders.count32ASM()
+  const size44ASM = await feeders.count44ASM()
+  const size56ASM = await feeders.count56ASM()
+  const size68ASM = await feeders.count68ASM()
 
   data = {
     info: result,
@@ -100,9 +109,18 @@ const onhandHandler = async (ctx) => {
     size18NXT: size18NXT,
     size24NXT: size24NXT,
     size32NXT: size32NXT,
-    size48NXT: size48NXT,
+    size44NXT: size44NXT,
     size56NXT: size56NXT,
-    size68NXT: size68NXT
+    size68NXT: size68NXT,
+    size8ASM: size8ASM,
+    size12ASM: size12ASM,
+    size16ASM: size16ASM,
+    size18ASM: size18ASM,
+    size24ASM: size24ASM,
+    size32ASM: size32ASM,
+    size44ASM: size44ASM,
+    size56ASM: size56ASM,
+    size68ASM: size68ASM
   }
 
   await ctx.render("onhand", data)

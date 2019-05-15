@@ -140,7 +140,7 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-                  <div class="x_content">
+                  <div class="x_content2">
                     <canvas id="onhandChart"></canvas>
                   </div>
                 </div>
@@ -541,6 +541,15 @@
 
       if ($("#asmPie").length) {
         var echartPieCollapse = echarts.init(document.getElementById("asmPie"),theme)
+        const asm8 = <%= size8ASM[0].count %>
+        const asm12 = <%= size12ASM[0].count %>
+        const asm16 = <%= size16ASM[0].count %>
+        const asm18 = <%= size18ASM[0].count %>
+        const asm24 = <%= size24ASM[0].count %>
+        const asm32 = <%= size32ASM[0].count %>
+        const asm44 = <%= size44ASM[0].count %>
+        const asm56 = <%= size56ASM[0].count %>
+        const asm68 = <%= size68ASM[0].count %>
 
         echartPieCollapse.setOption({
           tooltip: {
@@ -550,7 +559,7 @@
           legend: {
             x: "center",
             y: "bottom",
-            data: ["8mm.", "12mm.", "16mm.", "18mm.", "24mm.", "32mm.", "48mm.", "56mm.", "64mm."]
+            data: ["8mm.", "12mm.", "16mm.", "18mm.", "24mm.", "32mm.", "44mm.", "56mm.", "64mm."]
           },
           toolbox: {
             show: true,
@@ -581,45 +590,45 @@
               max: 40,
               sort: "ascending",
               data: [
-                {
-                  value: 10,
-                  name: "8mm."
-                },
-                {
-                  value: 5,
-                  name: "12mm."
-                },
-                {
-                  value: 15,
-                  name: "16mm."
-                },
-                {
-                  value: 25,
-                  name: "18mm."
-                },
-                {
-                  value: 20,
-                  name: "24mm."
-                },
-                {
-                  value: 35,
-                  name: "32mm."
-                }
-                ,
-                {
-                  value: 35,
-                  name: "48mm."
-                }
-                ,
-                {
-                  value: 35,
-                  name: "56mm."
-                }
-                ,
-                {
-                  value: 35,
-                  name: "68mm."
-                }
+              {
+                value: asm8,
+                name: "8mm."
+              },
+              {
+                value: asm12,
+                name: "12mm."
+              },
+              {
+                value: asm16,
+                name: "16mm."
+              },
+              {
+                value: asm18,
+                name: "18mm."
+              },
+              {
+                value: asm24,
+                name: "24mm."
+              },
+              {
+                value: asm32,
+                name: "32mm."
+              }
+              ,
+              {
+                value: asm44,
+                name: "44mm."
+              }
+              ,
+              {
+                value: asm56,
+                name: "56mm."
+              }
+              ,
+              {
+                value: asm68,
+                name: "68mm."
+              }
               ]
             }
           ]
@@ -633,7 +642,7 @@
         const nxt18 = <%= size18NXT[0].count %>
         const nxt24 = <%= size24NXT[0].count %>
         const nxt32 = <%= size32NXT[0].count %>
-        const nxt48 = <%= size48NXT[0].count %>
+        const nxt44 = <%= size44NXT[0].count %>
         const nxt56 = <%= size56NXT[0].count %>
         const nxt68 = <%= size68NXT[0].count %>
 
@@ -647,7 +656,7 @@
           legend: {
             x: "center",
             y: "bottom",
-            data: ["8mm.", "12mm.", "16mm.", "18mm.", "24mm.", "32mm.", "48mm.", "56mm.", "64mm."]
+            data: ["8mm.", "12mm.", "16mm.", "18mm.", "24mm.", "32mm.", "44mm.", "56mm.", "64mm."]
           },
           toolbox: {
             show: true,
@@ -704,8 +713,8 @@
                 }
                 ,
                 {
-                  value: nxt48,
-                  name: "48mm."
+                  value: nxt44,
+                  name: "44mm."
                 }
                 ,
                 {

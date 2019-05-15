@@ -1,12 +1,12 @@
-const uuid4 = require('uuid4')
-const fs = require('fs-extra')
-const path = require('path')
+const uuid4 = require("uuid4")
+const fs = require("fs-extra")
+const path = require("path")
 
-const feeders = require('../../../models/index3')
+const feeders = require("../../../models/index3")
 
-const users = require('../../../models/user')
+const users = require("../../../models/user")
 
-const getHandler = async ctx => {
+const getHandler = async (ctx) => {
   console.log(ctx.session.username)
   let data = {}
   let user = ctx.session.username
@@ -32,7 +32,8 @@ const getHandler = async ctx => {
     allFeeder: allFeeder,
     due: due,
     overDue: overDue,
-    onGoing, onGoing,
+    onGoing,
+    onGoing,
     scrap: scrap,
     repair: repair,
     size8Due: size8Due,
@@ -40,28 +41,28 @@ const getHandler = async ctx => {
     size16Due: size16Due,
     size24Due: size24Due,
     size32Due: size32Due,
-    otherSizeDue: otherSizeDue,
+    otherSizeDue: otherSizeDue
   }
 
-  await ctx.render('index', data)
+  await ctx.render("index3", data)
 }
 
 const listAllFeederDue = async (ctx) => {
   const listAllDue = await feeders.findAllDue()
   console.log(listAllDue)
   data = {
-    listAllDue: listAllDue,
+    listAllDue: listAllDue
   }
-  await ctx.render('tables_dynamics', data)
+  await ctx.render("tables_dynamics", data)
 }
 
 const listAllOnhands = async (ctx) => {
   const listAllDue = await feeders.findAllDue()
   console.log(listAllDue)
   data = {
-    listAllDue: listAllDue,
+    listAllDue: listAllDue
   }
-  await ctx.render('tables_dynamics', data)
+  await ctx.render("tables_dynamics", data)
 }
 
 const findAllFeeder = async (ctx) => {
@@ -76,10 +77,8 @@ const findAllFeeder = async (ctx) => {
     listAllRepair: listAllRepair,
     listAllScrap: listAllScrap
   }
-  await ctx.render('tables', data)
+  await ctx.render("tables", data)
 }
-
-
 
 module.exports = {
   getHandler,

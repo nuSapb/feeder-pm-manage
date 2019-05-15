@@ -3553,7 +3553,7 @@ function init_DataTables_feeders() {
 
     //TODO: init form data from datatable #datatable-buttons
     let table = $("#datatable-feeders").DataTable()
-    $("#datatable-feeders tbody").on("click", "tr", async function() {
+    $("#datatable-feeders tbody").on("dblclick", "tr", async function() {
       let tblData = table.row(this).data()
       console.log(tblData[0])
       if (tblData) {

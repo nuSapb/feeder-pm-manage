@@ -230,12 +230,12 @@ const count32NXT = async () => {
   return rows
 }
 
-const count48NXT = async () => {
+const count44NXT = async () => {
   const [rows] = await pool.query(
     `
     select count(feeder_id) as count
     from feeder_pm_detail
-    where brand = 'NXT' and status <> 'scrap' and size = 48
+    where brand = 'NXT' and status <> 'scrap' and size = 44
     `
   )
   return rows
@@ -258,6 +258,105 @@ const count68NXT = async () => {
     select count(feeder_id) as count
     from feeder_pm_detail
     where brand = 'NXT' and status <> 'scrap' and size = 68
+    `
+  )
+  return rows
+}
+
+const count8ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 8
+    `
+  )
+  return rows
+}
+
+const count12ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 12
+    `
+  )
+  return rows
+}
+
+const count16ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 16
+    `
+  )
+  return rows
+}
+
+const count18ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 18
+    `
+  )
+  return rows
+}
+
+const count24ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 24
+    `
+  )
+  return rows
+}
+
+const count32ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 32
+    `
+  )
+  return rows
+}
+
+const count44ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 44
+    `
+  )
+  return rows
+}
+
+const count56ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 56
+    `
+  )
+  return rows
+}
+
+const count68ASM = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(feeder_id) as count
+    from feeder_pm_detail
+    where brand = 'ASM' and status <> 'scrap' and size = 68
     `
   )
   return rows
@@ -514,7 +613,16 @@ module.exports = {
   count18NXT,
   count24NXT,
   count32NXT,
-  count48NXT,
+  count44NXT,
   count56NXT,
-  count68NXT
+  count68NXT,
+  count8ASM,
+  count12ASM,
+  count16ASM,
+  count18ASM,
+  count24ASM,
+  count32ASM,
+  count44ASM,
+  count56ASM,
+  count68ASM
 }
