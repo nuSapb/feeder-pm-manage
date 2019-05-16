@@ -3647,12 +3647,12 @@ function init_DataTables_feeders_scrap() {
     }
 
     //TODO: init form data from datatable #datatable-buttons
-    let table = $("#datatable-feeders-due").DataTable()
-    $("#datatable-feeders-due tbody").on("dblclick", "tr", async function() {
+    let table = $("#datatable-feeders-scrap").DataTable()
+    $("#datatable-feeders-scrap tbody").on("dblclick", "tr", async function() {
       let tblData = table.row(this).data()
       console.log(tblData[0])
       if (tblData) {
-        let response = await fetch(`/history/${tblData[0]}`)
+        let response = await fetch(`/history/${tblData[1]}`)
         let data = await response.json()
         sethistoryDetail(data)
       }
@@ -3747,7 +3747,7 @@ function init_DataTables_feeders_due() {
       let tblData = table.row(this).data()
       console.log(tblData[0])
       if (tblData) {
-        let response = await fetch(`/history/${tblData[1]}`)
+        let response = await fetch(`/history/${tblData[0]}`)
         let data = await response.json()
         sethistoryDetail(data)
       }

@@ -54,10 +54,10 @@ router.post("/feeders/approve", feeders.approve)
 
 /**
  * the last route get * and render 404error pasge
- */
-// router.get('*', async (ctx) => {
-//     ctx.status = 400
-//     await ctx.render("404error")
+//  */
+// router.get("*", async (ctx) => {
+//   ctx.status = 400
+//   await ctx.render("page_404")
 // })
 
 module.exports = router.routes()
