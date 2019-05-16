@@ -7,12 +7,14 @@ const feeders = require("../../../models/feeders")
 const config = require("../../../config")
 const users = require("../../../models/user")
 const pm = require("../../../models/pm")
+const sendEmail = require("../../services/emails/sendmail")
 
 const getHandler = async (ctx) => {
   console.log(ctx.session.username)
   let data = {}
   let user = ctx.session.username
   console.log(user)
+  const name = await users.userFullName(user)
   const userDetail = await users.findUserByUsername(user)
   const allFeeder = await feeders.countFeeder()
   const result = await feeders.findFeeders()
@@ -26,9 +28,14 @@ const getHandler = async (ctx) => {
   const size16Due = await feeders.count16Due()
   const size24Due = await feeders.count24Due()
   const size32Due = await feeders.count32Due()
+  const size44Due = await feeders.count44Due()
+  const size56Due = await feeders.count56Due()
+  const size68Due = await feeders.count68Due()
   const otherSizeDue = await feeders.countOtherDue()
 
   data = {
+    name: name,
+    user: user,
     info: result,
     userDetail: userDetail,
     allFeeder: allFeeder,
@@ -43,6 +50,9 @@ const getHandler = async (ctx) => {
     size16Due: size16Due,
     size24Due: size24Due,
     size32Due: size32Due,
+    size44Due: size44Due,
+    size56Due: size56Due,
+    size68Due: size68Due,
     otherSizeDue: otherSizeDue
   }
 
@@ -54,7 +64,7 @@ const onhandHandler = async (ctx) => {
   let data = {}
   let user = ctx.session.username
   console.log(user)
-  const userDetail = await users.findUserByUsername(user)
+  const name = await users.userFullName(user)
   const allFeeder = await feeders.countFeeder()
   const result = await feeders.findFeeders()
   const due = await feeders.countDue()
@@ -88,8 +98,9 @@ const onhandHandler = async (ctx) => {
   const size68ASM = await feeders.count68ASM()
 
   data = {
+    user: user,
     info: result,
-    userDetail: userDetail,
+    name: name,
     allFeeder: allFeeder,
     due: due,
     overDue: overDue,
@@ -146,6 +157,9 @@ const getData = async (ctx) => {
   const size16Due = await feeders.count16Due()
   const size24Due = await feeders.count24Due()
   const size32Due = await feeders.count32Due()
+  const size44Due = await feeders.count44Due()
+  const size56Due = await feeders.count56Due()
+  const size68Due = await feeders.count68Due()
   const otherSizeDue = await feeders.countOtherDue()
 
   data = {
@@ -164,6 +178,9 @@ const getData = async (ctx) => {
     size16Due: size16Due,
     size24Due: size24Due,
     size32Due: size32Due,
+    size44Due: size44Due,
+    size56Due: size56Due,
+    size68Due: size68Due,
     otherSizeDue: otherSizeDue
   }
 
@@ -172,9 +189,13 @@ const getData = async (ctx) => {
 
 const listAllFeederDue = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const listAllDue = await feeders.findAllDue()
+  const name = await users.userFullName(user)
   console.log(listAllDue)
   data = {
+    user: user,
+    name: name,
     listAllDue: listAllDue
   }
   await ctx.render("tables_dynamics", data)
@@ -192,13 +213,17 @@ const listAllOnhands = async (ctx) => {
 
 const findAllFeeder = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const listAllFeeder = await feeders.findAll()
   const listAllOverDue = await feeders.findOverDue()
   const listAllOngoing = await feeders.findOngoing()
   const listAllRepair = await feeders.findRepair()
   const listAllScrap = await feeders.findScrap()
+  const name = await users.userFullName(user)
 
   data = {
+    user: user,
+    name: name,
     listAllFeeder: listAllFeeder,
     listAllOverDue: listAllOverDue,
     listAllOngoing: listAllOngoing,
@@ -210,12 +235,16 @@ const findAllFeeder = async (ctx) => {
 
 const findlastTenRows = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const last10Rows = await feeders.findLast30Rows()
+  const name = await users.userFullName(user)
   console.log(last10Rows)
   ctx.session.flash = {
     success: "add feeder done"
   }
   data = {
+    user: user,
+    name: name,
     last10Rows: last10Rows,
     flash: ctx.flash
   }
@@ -236,7 +265,9 @@ const findHistory = async (ctx) => {
 
 const editHandler = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const listAllFeeder = await feeders.findAll()
+  const name = await users.userFullName(user)
   console.log(listAllFeeder)
 
   ctx.session.flash = {
@@ -244,6 +275,8 @@ const editHandler = async (ctx) => {
   }
 
   data = {
+    user: user,
+    name: name,
     listAllFeeder: listAllFeeder,
     flash: ctx.flash
   }
@@ -252,7 +285,9 @@ const editHandler = async (ctx) => {
 
 const manualPmHandler = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const tableManualPM = await feeders.tableManualPM()
+  const name = await users.userFullName(user)
   // console.log(tableManualPM)
 
   ctx.session.flash = {
@@ -260,6 +295,8 @@ const manualPmHandler = async (ctx) => {
   }
 
   data = {
+    user: user,
+    name: name,
     tableManualPM: tableManualPM,
     flash: ctx.flash
   }
@@ -277,6 +314,8 @@ const updateDataManualPM = async (ctx) => {
     await feeders.updateManualPMFeeder(feederId, updater, desc)
     await pm.insertHistory(feederId, pmType, user)
     console.log("Update manual PM data complete")
+    const status = "wait_approve"
+    await sendEmail.sendRequestMail(feederId, status)
     ctx.status = 200
     await ctx.redirect("/manual_pm_form")
   } catch (err) {
@@ -290,7 +329,9 @@ const updateDataManualPM = async (ctx) => {
 
 const scrapHandler = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const listAllFeeder = await feeders.findAll()
+  const name = await users.userFullName(user)
   console.log(listAllFeeder)
 
   ctx.session.flash = {
@@ -298,6 +339,8 @@ const scrapHandler = async (ctx) => {
   }
 
   data = {
+    user: user,
+    name: name,
     listAllFeeder: listAllFeeder,
     flash: ctx.flash
   }
@@ -306,9 +349,13 @@ const scrapHandler = async (ctx) => {
 
 const tableWaitApprove = async (ctx) => {
   let data = {}
+  let user = ctx.session.username
   const listAllFeeder = await feeders.findWaitApprove()
+  const name = await users.userFullName(user)
   console.log(listAllFeeder)
   data = {
+    user: user,
+    name: name,
     listAllFeeder: listAllFeeder
   }
   await ctx.render("approval", data)
@@ -417,6 +464,7 @@ const scrapFeeders = async (ctx) => {
     console.log("Update new data complete")
     ctx.status = 200
     if (ctx.status === 200) {
+      await sendEmail.sendRequestMail(feederId, status)
       ctx.session.flash = {
         success: "scrap feeder done"
       }
@@ -445,8 +493,9 @@ const approve = async (ctx) => {
     status = "scrap"
   }
   try {
-    feeders.approve(feederId, updater, status)
+    await feeders.approve(feederId, updater, status)
     console.log("Update new data complete")
+    await sendEmail.sendApproveMail(feederId, status)
     ctx.status = 200
     if (ctx.status === 200) {
       ctx.session.flash = {

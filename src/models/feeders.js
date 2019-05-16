@@ -46,9 +46,9 @@ const countNXT = async () => {
 const countDue = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
-    where status = 'due'
+    where status like 'due'
     `
   )
   return rows
@@ -101,7 +101,7 @@ const countRepair = async () => {
 const count8Due = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
     where status = 'due' and size = 8 
     `
@@ -112,7 +112,7 @@ const count8Due = async () => {
 const count12Due = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
     where status = 'due' and size = 12
     `
@@ -123,7 +123,7 @@ const count12Due = async () => {
 const count16Due = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
     where status = 'due' and size = 16
     `
@@ -134,7 +134,7 @@ const count16Due = async () => {
 const count24Due = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
     where status = 'due' and size = 24
     `
@@ -145,9 +145,42 @@ const count24Due = async () => {
 const count32Due = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
     where status = 'due' and size = 32
+    `
+  )
+  return rows
+}
+
+const count44Due = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(status) as count
+    from feeder_pm_detail
+    where status = 'due' and size = 44
+    `
+  )
+  return rows
+}
+
+const count56Due = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(status) as count
+    from feeder_pm_detail
+    where status = 'due' and size = 56
+    `
+  )
+  return rows
+}
+
+const count68Due = async () => {
+  const [rows] = await pool.query(
+    `
+    select count(status) as count
+    from feeder_pm_detail
+    where status = 'due' and size = 68
     `
   )
   return rows
@@ -156,7 +189,7 @@ const count32Due = async () => {
 const countOtherDue = async () => {
   const [rows] = await pool.query(
     `
-    select count(feeder_id) as count
+    select count(status) as count
     from feeder_pm_detail
     where status = 'due' and size > 32 
     `
@@ -591,6 +624,9 @@ module.exports = {
   count16Due,
   count24Due,
   count32Due,
+  count44Due,
+  count56Due,
+  count68Due,
   countOtherDue,
   findAll,
   findHistory,

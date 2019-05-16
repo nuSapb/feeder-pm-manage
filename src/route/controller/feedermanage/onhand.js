@@ -22,6 +22,7 @@ const getHandler = async (ctx) => {
   const otherSizeDue = await feeders.countOtherDue()
 
   data = {
+    user: user,
     info: result,
     userDetail: userDetail,
     allFeeder: allFeeder,

@@ -31,17 +31,11 @@ const userRole = async (ctx, next) => {
 
 router.get("/index", checkAuth, feeders.getHandler)
 router.get("/onhand", checkAuth, feeders.onhandHandler)
-
 router.get("/index2", checkAuth, index2.getHandler)
-
 router.get("/index3", checkAuth, index3.getHandler)
-
+router.get("/getasmdata", index2.getPmData)
+router.get("/getnxtdata", index3.getPmData)
 router.get("/feederdata", checkAuth, feeders.getData)
-
-router.get("/chartjs", async (ctx) => {
-  await ctx.render("chartjs")
-})
-
 router.get("/form", checkAuth, feeders.findlastTenRows)
 router.get("/edit_form", checkAuth, feeders.editHandler)
 router.get("/manual_pm_form", checkAuth, feeders.manualPmHandler)
@@ -51,7 +45,7 @@ router.post("/edit_feeders", checkAuth, feeders.editFeeders)
 router.get("/history/:feederId", checkAuth, feeders.findHistory)
 router.post("/scrap_feeders", checkAuth, feeders.scrapFeeders)
 router.post("/manual_pm_feeders", checkAuth, feeders.updateDataManualPM)
-router.get("/tables", feeders.findAllFeeder)
+router.get("/tables", checkAuth, feeders.findAllFeeder)
 router.get("/tables_dynamic", checkAuth, feeders.listAllFeederDue)
 router.post("/testapi", testapi.log)
 router.post("/update_pm", checkAuth, pm.postHandler)

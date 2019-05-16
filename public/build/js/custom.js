@@ -3608,6 +3608,196 @@ function init_DataTables_feeders() {
   TableManageButtons.init()
 }
 
+function init_DataTables_feeders_scrap() {
+  console.log("run_datatables")
+
+  if (typeof $.fn.DataTable === "undefined") {
+    return
+  }
+  console.log("init_DataTables")
+
+  var handleDataTableButtons = function() {
+    if ($("#datatable-feeders-scrap").length) {
+      $("#datatable-feeders-scrap").DataTable({
+        dom: "Blfrtip",
+        buttons: [
+          {
+            extend: "copy",
+            className: "btn-sm"
+          },
+          {
+            extend: "csv",
+            className: "btn-sm"
+          },
+          {
+            extend: "excel",
+            className: "btn-sm"
+          },
+          {
+            extend: "pdfHtml5",
+            className: "btn-sm"
+          },
+          {
+            extend: "print",
+            className: "btn-sm"
+          }
+        ],
+        responsive: true
+      })
+    }
+
+    //TODO: init form data from datatable #datatable-buttons
+    let table = $("#datatable-feeders-due").DataTable()
+    $("#datatable-feeders-due tbody").on("dblclick", "tr", async function() {
+      let tblData = table.row(this).data()
+      console.log(tblData[0])
+      if (tblData) {
+        let response = await fetch(`/history/${tblData[0]}`)
+        let data = await response.json()
+        sethistoryDetail(data)
+      }
+    })
+  }
+
+  TableManageButtons = (function() {
+    "use strict"
+    return {
+      init: function() {
+        handleDataTableButtons()
+      }
+    }
+  })()
+
+  $("#datatable").dataTable()
+
+  $("#datatable-keytable").DataTable({
+    keys: true
+  })
+
+  $("#datatable-responsive").DataTable()
+
+  $("#datatable-scroller").DataTable({
+    ajax: "js/datatables/json/scroller-demo.json",
+    deferRender: true,
+    scrollY: 380,
+    scrollCollapse: true,
+    scroller: true
+  })
+
+  $("#datatable-fixed-header").DataTable({
+    fixedHeader: true
+  })
+
+  var $datatable = $("#datatable-checkbox")
+
+  $datatable.dataTable({
+    order: [[1, "asc"]],
+    columnDefs: [{ orderable: false, targets: [0] }]
+  })
+  $datatable.on("draw.dt", function() {
+    $("checkbox input").iCheck({
+      checkboxClass: "icheckbox_flat-green"
+    })
+  })
+
+  TableManageButtons.init()
+}
+
+function init_DataTables_feeders_due() {
+  console.log("run_datatables")
+
+  if (typeof $.fn.DataTable === "undefined") {
+    return
+  }
+  console.log("init_DataTables")
+
+  var handleDataTableButtons = function() {
+    if ($("#datatable-feeders-due").length) {
+      $("#datatable-feeders-due").DataTable({
+        dom: "Blfrtip",
+        buttons: [
+          {
+            extend: "copy",
+            className: "btn-sm"
+          },
+          {
+            extend: "csv",
+            className: "btn-sm"
+          },
+          {
+            extend: "excel",
+            className: "btn-sm"
+          },
+          {
+            extend: "pdfHtml5",
+            className: "btn-sm"
+          },
+          {
+            extend: "print",
+            className: "btn-sm"
+          }
+        ],
+        responsive: true
+      })
+    }
+
+    //TODO: init form data from datatable #datatable-buttons
+    let table = $("#datatable-feeders-due").DataTable()
+    $("#datatable-feeders-due tbody").on("dblclick", "tr", async function() {
+      let tblData = table.row(this).data()
+      console.log(tblData[0])
+      if (tblData) {
+        let response = await fetch(`/history/${tblData[1]}`)
+        let data = await response.json()
+        sethistoryDetail(data)
+      }
+    })
+  }
+
+  TableManageButtons = (function() {
+    "use strict"
+    return {
+      init: function() {
+        handleDataTableButtons()
+      }
+    }
+  })()
+
+  $("#datatable").dataTable()
+
+  $("#datatable-keytable").DataTable({
+    keys: true
+  })
+
+  $("#datatable-responsive").DataTable()
+
+  $("#datatable-scroller").DataTable({
+    ajax: "js/datatables/json/scroller-demo.json",
+    deferRender: true,
+    scrollY: 380,
+    scrollCollapse: true,
+    scroller: true
+  })
+
+  $("#datatable-fixed-header").DataTable({
+    fixedHeader: true
+  })
+
+  var $datatable = $("#datatable-checkbox")
+
+  $datatable.dataTable({
+    order: [[1, "asc"]],
+    columnDefs: [{ orderable: false, targets: [0] }]
+  })
+  $datatable.on("draw.dt", function() {
+    $("checkbox input").iCheck({
+      checkboxClass: "icheckbox_flat-green"
+    })
+  })
+
+  TableManageButtons.init()
+}
+
 /* CHART - MORRIS  */
 
 function init_morris_charts() {
@@ -6435,6 +6625,8 @@ $(document).ready(function() {
   init_DataTables_scrap()
   init_DataTables_approve()
   init_DataTables_feeders()
+  init_DataTables_feeders_scrap()
+  init_DataTables_feeders_due()
   init_chart_doughnut()
   init_gauge()
   init_PNotify()

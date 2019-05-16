@@ -73,10 +73,47 @@ const userRole = async (username) => {
   return rows
 }
 
+const userFullName = async (username) => {
+  const [rows] = await pool.query(
+    `
+	SELECT usr_fullname as fullname
+	FROM mas_user
+	WHERE USR_USERNAME = ?
+	`,
+    [username]
+  )
+  return rows
+}
+
+const userEmailList = async () => {
+  const [rows] = await pool.query(
+    `
+    select usr_email as email
+    from mas_user
+    where 1
+    `
+  )
+  return rows
+}
+
+const adminEmailList = async () => {
+  const [rows] = await pool.query(
+    `
+    select usr_email as email
+    from mas_user
+    where usr_rol_id_fk = 1
+    `
+  )
+  return rows
+}
+
 module.exports = {
   register,
   saveUser,
   findUserByUsername,
   checkHasUser,
-  userRole
+  userRole,
+  userEmailList,
+  adminEmailList,
+  userFullName
 }

@@ -21,20 +21,7 @@
           <!-- /sidebar menu -->
 
           <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-          </div>
+          <% include sidebar-footer %>
           <!-- /menu footer buttons -->
         </div>
       </div>
@@ -85,78 +72,7 @@
             <!-- <span class="count_bottom"><i class="dark"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
           </div>
         </div>
-        <!-- /top tiles -->
 
-        <!-- <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="dashboard_graph">
-
-              <div class="row x_title">
-                <div class="col-md-6">
-                  <h3>PM Activities <small>Over all Feeder pm</small></h3>
-                </div>
-                <div class="col-md-6">
-                  <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                    <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-9 col-sm-9 col-xs-12">
-                <div id="chart_plot_01" class="demo-placeholder"></div>
-              </div>
-              <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
-                <div class="x_title">
-                  <h2>Top PM Performance</h2>
-                  <div class="clearfix"></div>
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-6">
-                  <div>
-                    <p>NXT</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p>ASM</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 col-xs-6">
-                  <div>
-                    <p>XXX</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="2"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p>YYY</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="2"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="clearfix"></div>
-            </div>
-          </div>
-
-        </div>
-        <br /> -->
         <div class="row">
           <!-- pie chart -->
           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -187,8 +103,9 @@
             </div>
           </div>
           <!-- /Pie chart -->
+          <% include barchart-index2 %>
 
-          <div class="col-md-6 col-sm-6 col-xs-12">
+          <!-- <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel tile fixed_height_320">
               <div class="x_title">
                 <h2>PM Due By Size</h2>
@@ -317,7 +234,7 @@
 
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
 
@@ -346,12 +263,15 @@
   <script src="/-/vendors/raphael/raphael.min.js"></script>
   <script src="/-/vendors/morris.js/morris.min.js"></script>
   <script>
-    async function init_morris_charts2() {
-      let response = await fetch(`/feederdata`)
+    async function init_charts_index2() {
+      let response = await fetch(`/getasmdata`)
       let data = await response.json()
+      // let response2 = await fetch(`/getasmdata`)
+      // let data = await response2.json()
+
       console.log(data)
       let scrap = data.scrap[0].count
-      let allFeeder = data.allFeeder[0].count + scrap
+      let allFeeder = data.allFeeder[0].count
       console.log("allFeeder = " + allFeeder)
       let due = data.due[0].count
       console.log("due = " + due)
@@ -360,9 +280,20 @@
       let pDue = ((due * 100) / allFeeder).toFixed(2)
       console.log("pDue = " + pDue)
       let pOverDue = ((overDue * 100) / allFeeder).toFixed(2)
-      let pScrap = ((scrap * 100) / allFeeder).toFixed(2)
+      // let pScrap = ((scrap * 100) / allFeeder).toFixed(2)
 
       let pNormal = (100 - pDue - pOverDue).toFixed(2)
+
+      const s8 = data.size8Due[0].count
+      const s12 = data.size12Due[0].count
+      const s16 = data.size16Due[0].count
+      const s24 = data.size24Due[0].count
+      const s32 = data.size32Due[0].count
+      const s44 = data.size44Due[0].count
+      const s56 = data.size56Due[0].count
+      const s68 = data.size68Due[0].count
+
+      console.log(s8)
 
 
 
@@ -377,8 +308,7 @@
           data: [
             { label: 'Normal', value: pNormal },
             { label: 'Due', value: pDue },
-            { label: 'Overdue', value: pOverDue },
-            { label: 'Scrap', value: pScrap },
+            { label: 'Overdue', value: pOverDue }
           ],
           colors: ['#16C172', '#FCAB10', '#F8333C', '#A29C9B'],
           formatter: function (y) {
@@ -389,13 +319,34 @@
 
       }
 
+      if ($("#graph_bar_asm").length) {
+        Morris.Bar({
+          element: "graph_bar_asm",
+          data: [
+            { device: "Size 8mm.", total:s8 },
+            { device: "Size 12mm.", total: s12 },
+            { device: "Size 16mm.", total: s16 },
+            { device: "Size 24mm.", total: s24 },
+            { device: "Size 32mm.", total: s32 },
+            { device: "Size 44mm", total: s44 },
+            { device: "Size 56mm.", total: s56 },
+            { device: "Size 68 mm", total: s68 }
+          ],
+          xkey: "device",
+          ykeys: ["total"],
+          labels: ["total"],
+          barRatio: 0.4,
+          barColors: ["#FCAB10", "#34495E", "#ACADAC", "#3498DB"],
+          xLabelAngle: 35,
+          hideHover: "auto",
+          resize: true
+        })
+      }
     }
 
-
-
     $(document).ready(() => {
-      init_morris_charts2()
-      console.log('morris chart2 work')
+      init_charts_index2()
+      console.log('init_charts_index2 work')
     })
   </script>
 </body>
