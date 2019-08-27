@@ -12,17 +12,36 @@ const feeder = require("../../../models/feeders")
 const getDueData = async () => {
   const data = await feeder.countDue()
   console.log("countDue" + ": " + data[0].count)
-  const dat = await user.userEmailList()
-  console.log(dat)
-  console.log(typeof dat)
-  console.log(dat[0].email, dat[1].email, dat[2].email)
+  const objMail = await user.userEmailList()
+
+  let emailList = []
+  for (let key in objMail) {
+    let obj = objMail[key]
+    for (let i in obj) {
+      let j = obj[i]
+      emailList.push(j)
+    }
+  }
+  console.log(emailList)
 }
 
-const autoSendMail = new CronJob("0 */60 * * * *", async () => {
+/***
+ * autoSendMail Cronjob Runs every day
+ * at 08:00:00
+ */
+const autoSendMail = new CronJob("0 8 * * *", async () => {
   try {
     const data = await feeder.countDue()
-    const userMail = await user.userEmailList()
-    mailList = userMail[0].email
+    const objMail = await user.userEmailList()
+    let emailList = []
+    for (let key in objMail) {
+      let obj = objMail[key]
+      for (let i in obj) {
+        let j = obj[i]
+        emailList.push(j)
+      }
+    }
+    console.log(emailList)
     console.log(">>> Auto send email cronjob start <<<")
     const maillist = [`Anu.Sakpibal@KimballElectronics.com`]
     console.log(mailSys.mailuser + " " + maillist)
@@ -39,12 +58,16 @@ const autoSendMail = new CronJob("0 */60 * * * *", async () => {
       text: "Feeder PM",
       data: data[0].count
     })
-    await sendEmail.sendMail(
-      "Feeder PM Alert",
-      mailSys.mailuser,
-      maillist,
-      html
-    )
+
+    let totalFeeder = data[0].count
+    if (totalFeeder >= 1) {
+      await sendEmail.sendMail(
+        "Feeder PM Alert",
+        mailSys.mailuser,
+        emailList,
+        html
+      )
+    }
   } catch (err) {
     console.log(err)
   }
@@ -59,6 +82,16 @@ const sendApproveMail = async (feederId, status) => {
     }
     const adminMail = await user.adminEmailList()
     console.log(adminMail)
+    const objMail = await user.userEmailList()
+    let emailList = []
+    for (let key in objMail) {
+      let obj = objMail[key]
+      for (let i in obj) {
+        let j = obj[i]
+        emailList.push(j)
+      }
+    }
+    console.log(emailList)
 
     mailList = adminMail[1].email
     console.log(">>> send email from approval start <<<")
@@ -79,7 +112,7 @@ const sendApproveMail = async (feederId, status) => {
     await sendEmail.sendMail(
       "Feeder PM Alert",
       mailSys.mailuser,
-      mailList,
+      emailList,
       html
     )
   } catch (err) {
@@ -95,11 +128,18 @@ const sendRequestMail = async (feederId, status) => {
       status: status
     }
     const adminMail = await user.adminEmailList()
-    console.log(adminMail)
+    const objMail = await user.userEmailList()
+    let emailList = []
+    for (let key in objMail) {
+      let obj = objMail[key]
+      for (let i in obj) {
+        let j = obj[i]
+        emailList.push(j)
+      }
+    }
+    console.log(emailList)
 
-    mailList = adminMail[1].email
     console.log(">>> send email from approval start <<<")
-    console.log(mailSys.mailuser + " " + mailList)
     const emailTemplate = path.join(
       process.cwd(),
       "src/views/emails/mailRequest.ejs"
@@ -116,7 +156,7 @@ const sendRequestMail = async (feederId, status) => {
     await sendEmail.sendMail(
       "Feeder PM Alert",
       mailSys.mailuser,
-      mailList,
+      emailList,
       html
     )
   } catch (err) {

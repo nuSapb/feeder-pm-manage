@@ -8,6 +8,7 @@ const cors = require("@koa/cors")
 const logger = require("koa-logger")
 const app = new Koa()
 const send = require("../src/route/services/emails/sendmail")
+const pmSchedule = require("../src/route/services/pm/pm-handle")
 
 render(app, {
   root: path.join(__dirname, "views"),
@@ -16,7 +17,7 @@ render(app, {
   cache: false
 })
 
-app.use(logger())
+// app.use(logger())
 
 const sessionStore = {}
 const sessionConfig = {
@@ -54,6 +55,13 @@ const stripPrefix = async (ctx, next) => {
   await next()
 }
 
+const currentMonth = () => {
+  const d = new Date()
+  const n = d.getMonth()
+  return n + 1
+
+}
+
 app.keys = ["supersecretorder"]
 app.use(session(sessionConfig, app))
 app.use(cors({ credentials: true }))
@@ -68,6 +76,8 @@ app.use(stripPrefix)
 app.use(serve("public"))
 app.listen(process.env.PORT || 8088, async () => {
   console.log("Server start listenning on port 8088")
+  console.log('current month is: ' + currentMonth())
+  pmSchedule.verifyDueDate.start()
   send.autoSendMail.start()
   send.getDueData()
 })

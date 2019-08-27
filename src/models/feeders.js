@@ -609,6 +609,34 @@ const scrapFeeders = async (feederId, updater, status, desc) => {
   )
 }
 
+const updateDueStatus = async () => {
+  let [rows] = await pool.query(
+    `
+    UPDATE feeder_pm_detail
+    SET status = 'due', updater = 'admin', update_date = now()
+    WHERE 
+      (status = 'normal' AND month(now()) - pm_round1 = 0 AND updater = 'admin') OR 
+      (status = 'normal' AND month(now()) - pm_round2 = 0 AND updater = 'admin') OR 
+      (status = 'normal' AND month(now()) - pm_round3 = 0 AND updater = 'admin') OR
+      (status = 'normal' AND month(now()) - pm_round3 = 0 AND updater = 'admin') 
+    `
+  )
+}
+
+const updateOverDueStatus = async () => {
+  let [rows] = await pool.query(
+    `
+    UPDATE feeder_pm_detail
+    SET status = 'overdue', updater = 'admin', update_date = now()
+    WHERE 
+      (status = 'due' AND month(now()) - pm_round1 > 0 AND updater <> 'admin') OR 
+      (status = 'due' AND month(now()) - pm_round2 > 0 AND updater <> 'admin') OR 
+      (status = 'due' AND month(now()) - pm_round3 > 0 AND updater <> 'admin') OR
+      (status = 'due' AND month(now()) - pm_round3 > 0 AND updater <> 'admin') 
+    `
+  )
+}
+
 module.exports = {
   findFeeders,
   countFeeder,
@@ -660,5 +688,7 @@ module.exports = {
   count32ASM,
   count44ASM,
   count56ASM,
-  count68ASM
+  count68ASM,
+  updateDueStatus,
+  updateOverDueStatus
 }

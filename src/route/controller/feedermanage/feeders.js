@@ -332,7 +332,7 @@ const scrapHandler = async (ctx) => {
   let user = ctx.session.username
   const listAllFeeder = await feeders.findAll()
   const name = await users.userFullName(user)
-  console.log(listAllFeeder)
+  // console.log(listAllFeeder)
 
   ctx.session.flash = {
     success: "scrap feeder done"
